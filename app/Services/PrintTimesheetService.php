@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\LeaveType;
 use App\Models\Timesheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -65,6 +66,7 @@ class PrintTimesheetService
                 'logoSize' => $this->logoSize($this->timesheet),
                 'days' => $timesheetService->getDays(),
                 'totals' => $timesheetService->getTotals(),
+                'leaveTypes' => LeaveType::query()->select('id', 'code', 'name')->get(),
             ]
         )
             ->setOption('enable_php', true)

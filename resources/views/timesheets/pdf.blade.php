@@ -163,6 +163,11 @@
 				padding-bottom: 8px;
 			}
 
+			.py-4 {
+				padding-top: 16px;
+				padding-bottom: 16px;
+			}
+
 			.text-base {
 				font-size: 16px;
 				line-height: 24px;
@@ -350,11 +355,16 @@
 				</tbody>
 			</table>
 
-			@if ($timesheet->notes)
-				<p>
-					{{-- {{ trans('timesheets::timesheet.notes') }}: {!! $timesheet->notes !!} --}}
-				</p>
-			@endif
+			<p class="border-b border-t py-4">
+				@forelse ($leaveTypes as $leaveType)
+					<span style="margin-right: 10px">
+						<span>{{ $loop->index }}. </span>
+						{{ $leaveType->code }} -
+						{{ $leaveType->name }}
+					</span>
+				@empty
+				@endforelse
+			</p>
 
 			<x-printing-time />
 
@@ -397,6 +407,33 @@
 								{{ __('Signature') }}
 							</p>
 						</th>
+					</tr>
+					<tr>
+						<td class="px-1 text-left">
+							<p>
+								{{ __('Approved By') }}
+							</p>
+						</td>
+						<td class="px-1 text-left">
+							<p>
+								{{ $timesheet->user->name }}
+							</p>
+						</td>
+						<td class="px-1 text-left">
+							<p>
+
+							</p>
+						</td>
+						<td class="px-1 text-left">
+							<p>
+								{{ fusion_date_format($timesheet->created_at) }}
+							</p>
+						</td>
+						<td>
+							@include('components.signature', [
+								'userId' => $timesheet->user_id,
+							])
+						</td>
 					</tr>
 					<tr>
 						<td class="px-1 text-left">
