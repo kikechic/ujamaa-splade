@@ -1,4 +1,6 @@
-<div class="border-b-1 h-16 min-h-[4rem] w-full border-slate-200">
+<div
+	class="border-b-1 h-16 min-h-[4rem] w-full border-slate-200 bg-slate-50 shadow-md"
+>
 	<nav class="block h-full w-full py-2 print:hidden">
 		<div class="flex flex-row justify-between">
 			<div></div>

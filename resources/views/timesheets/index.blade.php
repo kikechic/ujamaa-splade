@@ -26,6 +26,7 @@
 		</x-slot>
 
 		<x-splade-table
+			class="table-index"
 			:for="$timesheets"
 			search-debounce="500"
 		>
