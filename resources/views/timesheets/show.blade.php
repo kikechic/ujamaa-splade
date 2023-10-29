@@ -22,40 +22,38 @@
 							method="post"
 							confirm
 							confirm-text="Send approval request?"
-							{{-- action="{{ route('approvalRequests.store', [
+							action="{{ route('approvalRequests.store', [
 							    'documentable_id' => $timesheet->id,
-							    'documentable_code' => \App\Enums\DocumentTypesEnum::timesheet(),
-							]) }}" --}}
+							    'documentable_code' => 'timesheet',
+							]) }}"
 							@success="$splade.emit('timesheet-status-updated-' + {{ $timesheet->id }}); data.status = `{{ \App\Enums\TimesheetStatusEnum::pending() }}`"
 						>
 						</x-splade-form>
 
 						<x-splade-form
 							id="cancel-approval"
-							stay
 							preserve-scroll
 							confirm
 							confirm-text="Cancel approval request?"
-							{{-- action="{{ route('approvalRequests.destroy', [
+							action="{{ route('approvalRequests.reject', [
 							    'documentable_id' => $timesheet->id,
-							    'documentable_code' => \App\Enums\DocumentTypesEnum::timesheet(),
-							]) }}" --}}
-							method="delete"
+							    'documentable_code' => 'timesheet',
+							]) }}"
+							method="PUT"
 							@success="$splade.emit('timesheet-status-updated-' + {{ $timesheet->id }}); data.status = `{{ \App\Enums\TimesheetStatusEnum::open() }}`"
 						>
 						</x-splade-form>
 
 						<x-splade-form
 							id="approve"
-							stay
 							preserve-scroll
 							confirm
 							confirm-text="Approve request?"
-							{{-- action="{{ route('approvalRequests.update', [
+							action="{{ route('approvalRequests.approve', [
 							    'documentable_id' => $timesheet->id,
-							    'documentable_code' => \App\Enums\DocumentTypesEnum::timesheet(),
-							]) }}" --}}
-							method="put"
+							    'documentable_code' => 'timesheet',
+							]) }}"
+							method="PUT"
 							@success="$splade.emit('timesheet-status-updated-' + {{ $timesheet->id }}); data.status = `{{ \App\Enums\TimesheetStatusEnum::approved() }}`"
 						>
 						</x-splade-form>

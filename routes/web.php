@@ -14,6 +14,7 @@ use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\ApprovalRequestController;
 use App\Http\Controllers\TimesheetPeriodController;
 
 /*
@@ -68,11 +69,13 @@ Route::middleware(['splade'])->group(function () {
             ]
         ])->names('timesheetPeriods');
 
-        Route::resource('timesheet-approvals', TimesheetController::class, [
+        Route::put('approval-requests/approve', [ApprovalRequestController::class, 'approve'])->name('approvalRequests.approve');
+        Route::put('approval-requests/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
+        Route::resource('approval-requests', ApprovalRequestController::class, [
             'parameters' => [
-                'timesheet-approvals' => 'timesheetApproval'
+                'approval-requests' => 'approvalRequest'
             ]
-        ])->names('timesheetApprovals');
+        ])->names('approvalRequests');
 
         Route::prefix('users')->group(function () {
             Route::get('/approvals', [ApprovalController::class, 'index'])->name('approvals.index');

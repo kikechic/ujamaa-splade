@@ -148,10 +148,10 @@
 			@endcan
 			<li class="items-center">
 				<x-sidebar-link
-					:active="request()->routeIs('timesheetApprovals.*')"
-					:href="route('timesheetApprovals.index')"
+					:active="request()->routeIs('approvalRequests.*')"
+					:href="route('approvalRequests.index')"
 				>
-					{{ __('Timesheet Approvals') }}
+					{{ __('Requests To Approve') }}
 				</x-sidebar-link>
 			</li>
 			<li class="items-center">

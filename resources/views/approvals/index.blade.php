@@ -18,30 +18,6 @@
 					{{ $item->name }}
 				</x-splade-link>
 			</x-splade-cell>
-			<x-splade-cell approval.claim_limit>
-				{{ $item->approval->claim_limit ? number_format($item->approval->claim_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.payment_voucher_limit>
-				{{ $item->approval->payment_voucher_limit ? number_format($item->approval->payment_voucher_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.imprest_request_limit>
-				{{ $item->approval->imprest_request_limit ? number_format($item->approval->imprest_request_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.imprest_surrender_limit>
-				{{ $item->approval->imprest_surrender_limit ? number_format($item->approval->imprest_surrender_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.travel_request_limit>
-				{{ $item->approval->travel_request_limit ? number_format($item->approval->travel_request_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.travel_surrender_limit>
-				{{ $item->approval->travel_surrender_limit ? number_format($item->approval->travel_surrender_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.purchase_request_limit>
-				{{ $item->approval->purchase_request_limit ? number_format($item->approval->purchase_request_limit, 2) : '' }}
-			</x-splade-cell>
-			<x-splade-cell approval.receipt_surrender_limit>
-				{{ $item->approval->receipt_surrender_limit ? number_format($item->approval->receipt_surrender_limit, 2) : '' }}
-			</x-splade-cell>
 			<x-splade-cell actions>
 				<x-index-actions-dropdown>
 					@can('approvals_update')
