@@ -26,6 +26,16 @@
 					{{ __('Dashboard') }}
 				</x-splade-link>
 			</li>
+			@can('users_access')
+				<li class="items-center">
+					<x-sidebar-link
+						:active="request()->routeIs('users.*')"
+						:href="route('users.index')"
+					>
+						{{ __('Users') }}
+					</x-sidebar-link>
+				</li>
+			@endcan
 			@can('roles_access')
 				<li class="items-center">
 					<x-sidebar-link
@@ -106,6 +116,16 @@
 					</x-sidebar-link>
 				</li>
 			@endcan
+			@can('leaveTypes_access')
+				<li class="items-center">
+					<x-sidebar-link
+						:active="request()->routeIs('leaveTypes.*')"
+						:href="route('leaveTypes.index')"
+					>
+						{{ __('Leave Types') }}
+					</x-sidebar-link>
+				</li>
+			@endcan
 			@can('timesheet_periods_access')
 				<li class="items-center">
 					<x-sidebar-link
@@ -123,16 +143,6 @@
 						:href="route('timesheets.index')"
 					>
 						{{ __('Timesheets') }}
-					</x-sidebar-link>
-				</li>
-			@endcan
-			@can('users_access')
-				<li class="items-center">
-					<x-sidebar-link
-						:active="request()->routeIs('users.*')"
-						:href="route('users.index')"
-					>
-						{{ __('Users') }}
 					</x-sidebar-link>
 				</li>
 			@endcan

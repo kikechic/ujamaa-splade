@@ -202,7 +202,7 @@
 						</td>
 						<td class="text-right">
 							<h4 class="text-base uppercase">
-								<strong>{{ config('fusion.print.timesheets.name') }}</strong>
+								<strong>{{ __('Timesheet') }}</strong>
 							</h4>
 						</td>
 					</tr>

@@ -9,6 +9,7 @@ use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ApprovalController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LeaveTypeController;
 use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
@@ -40,6 +41,12 @@ Route::middleware(['splade'])->group(function () {
         Route::resource('offices', OfficeController::class);
         Route::resource('donors', DonorController::class);
         Route::resource('employees', EmployeeController::class);
+
+        Route::resource('leave-types', LeaveTypeController::class, [
+            'parameters' => [
+                'leave-types' => 'leaveType'
+            ]
+        ])->names('leaveTypes');
 
         Route::post('users/{user}/signature/destroy', [UserController::class, 'destroySignature'])->name('user-signature.destroy');
         Route::resource('users', UserController::class);

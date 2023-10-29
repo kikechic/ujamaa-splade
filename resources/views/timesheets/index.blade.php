@@ -28,7 +28,7 @@
 		<x-splade-table
 			class="table-index"
 			:for="$timesheets"
-			search-debounce="500"
+			search-debounce="800"
 		>
 			<x-splade-cell timesheet_number>
 				<x-splade-link

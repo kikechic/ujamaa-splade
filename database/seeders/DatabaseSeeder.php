@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             DonorsTableSeeder::class,
             OfficesTableSeeder::class,
             DonorsTableSeeder::class,
+            LeaveTypesTableSeeder::class,
         ]);
     }
 }

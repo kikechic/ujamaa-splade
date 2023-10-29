@@ -15,6 +15,7 @@ return [
         'departments',
         'designations',
         'employees',
+        'leave_types',
         'timesheets',
         'timesheet_periods',
     ],
