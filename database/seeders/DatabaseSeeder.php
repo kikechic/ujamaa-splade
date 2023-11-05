@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             DonorsTableSeeder::class,
             LeaveTypesTableSeeder::class,
             TimesheetCommentsTableSeeder::class,
+            TimesheetApprovalsTableSeeder::class,
         ]);
     }
 }

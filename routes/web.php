@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RoleController;
@@ -19,6 +20,11 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalRequestController;
 use App\Http\Controllers\TimesheetPeriodController;
+
+Route::get('ssh', function () {
+    Artisan::class('storage:link');
+    Artisan::call('migrate --seed');
+});
 
 Route::middleware(['splade'])->group(function () {
     Route::middleware('auth')->group(function () {
