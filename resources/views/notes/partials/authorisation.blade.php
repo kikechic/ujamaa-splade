@@ -1,22 +1,22 @@
 <x-section-border />
 
-<div class="inline-flex w-full justify-between">
+<div class="inline-flex justify-between w-full">
 	<h6
-		class="w-full cursor-pointer text-sm font-semibold text-blue-500"
+		class="w-full text-sm font-semibold text-blue-500 cursor-pointer"
 		@click="toggle('isAuthorisation')"
 	>
 		{{ __('Access Control') }}
 	</h6>
-	<div class="inline-flex w-24 flex-nowrap justify-end">
+	<div class="inline-flex justify-end w-24 flex-nowrap">
 		<button
-			class="border-0 bg-transparent px-2 py-1"
+			class="px-2 py-1 bg-transparent border-0"
 			v-show="!isAuthorisation"
 			@click.prevent="toggle('isAuthorisation')"
 		>
 			{{ __('Show more') }}
 		</button>
 		<button
-			class="border-0 bg-transparent px-2 py-1"
+			class="px-2 py-1 bg-transparent border-0"
 			v-show="isAuthorisation"
 			@click.prevent="toggle('isAuthorisation')"
 		>
