@@ -81,6 +81,18 @@ class DesignationsTable extends AbstractTable
                 sortable: true,
             )
             ->column(
+                key: 'created_at',
+                label: __('Created At'),
+                as: fn ($date, $row) => fusion_date_format($date, config('fusion.timestamp_format')),
+                hidden: true,
+            )
+            ->column(
+                key: 'updated_at',
+                label: __('Updated At'),
+                as: fn ($date, $row) => fusion_date_format($date, config('fusion.timestamp_format')),
+                hidden: true,
+            )
+            ->column(
                 key: 'actions',
                 label: __('Actions'),
                 alignment: 'center',

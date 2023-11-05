@@ -36,7 +36,11 @@ class LeaveTypesTable extends AbstractTable
      */
     public function for()
     {
-        return LeaveType::query();
+        return LeaveType::query()
+            ->with([
+                'user:id,name',
+                'updater:id,name',
+            ]);
     }
 
     /**
@@ -63,6 +67,28 @@ class LeaveTypesTable extends AbstractTable
             ->column(
                 key: 'status',
                 label: __('Status'),
+            )
+            ->column(
+                key: 'user.name',
+                label: __('Created By'),
+                hidden: true,
+            )
+            ->column(
+                key: 'updater.name',
+                label: __('Updated By'),
+                hidden: true,
+            )
+            ->column(
+                key: 'created_at',
+                label: __('Created At'),
+                as: fn ($date, $row) => fusion_date_format($date, config('fusion.timestamp_format')),
+                hidden: true,
+            )
+            ->column(
+                key: 'updated_at',
+                label: __('Updated At'),
+                as: fn ($date, $row) => fusion_date_format($date, config('fusion.timestamp_format')),
+                hidden: true,
             )
             ->column(
                 key: 'actions',

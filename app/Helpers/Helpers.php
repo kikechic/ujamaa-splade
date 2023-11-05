@@ -23,7 +23,7 @@ class Helpers
         }
 
         $modified = (new ImageManager)
-            ->make($image->getPath())
+            ->make($image->getUrl())
             ->widen($width, function ($constraint) {
                 $constraint->upsize();
             })

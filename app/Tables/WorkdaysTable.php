@@ -2,10 +2,10 @@
 
 namespace App\Tables;
 
-use App\Models\WorkdaysTable;
+use App\Models\Workday;
 use Illuminate\Http\Request;
-use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
+use ProtoneMedia\Splade\AbstractTable;
 
 class WorkdaysTable extends AbstractTable
 {
@@ -36,7 +36,7 @@ class WorkdaysTable extends AbstractTable
      */
     public function for()
     {
-        return WorkdaysTable::query();
+        return Workday::query();
     }
 
     /**
@@ -51,11 +51,11 @@ class WorkdaysTable extends AbstractTable
             ->withGlobalSearch(columns: ['id'])
             ->column('id', sortable: true);
 
-            // ->searchInput()
-            // ->selectFilter()
-            // ->withGlobalSearch()
+        // ->searchInput()
+        // ->selectFilter()
+        // ->withGlobalSearch()
 
-            // ->bulkAction()
-            // ->export()
+        // ->bulkAction()
+        // ->export()
     }
 }
