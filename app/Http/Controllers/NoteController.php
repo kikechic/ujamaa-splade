@@ -8,6 +8,6 @@ class NoteController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return view('notes');
+        return view('notes.index');
     }
 }

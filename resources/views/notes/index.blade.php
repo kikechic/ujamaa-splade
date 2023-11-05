@@ -11,12 +11,13 @@
 				{{ __('FAQ & Notes') }}
 			</x-slot:title>
 			<x-slot:content>
-				<a
-					href="https://www.signwell.com/online-signature/draw/"
-					target="_blank"
-				>
-					{{ __('Signature') }}
-				</a>
+				<x-splade-toggle :data="[
+				    'isAuthorisation' => true,
+				    'isSignature' => true,
+				]">
+					@include('notes.partials.authorisation')
+					@include('notes.partials.signature')
+				</x-splade-toggle>
 			</x-slot:content>
 			<x-slot:footer>
 				<x-splade-button
