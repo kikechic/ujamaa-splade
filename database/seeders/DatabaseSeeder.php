@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             OfficesTableSeeder::class,
             DonorsTableSeeder::class,
             LeaveTypesTableSeeder::class,
+            TimesheetCommentsTableSeeder::class,
         ]);
     }
 }

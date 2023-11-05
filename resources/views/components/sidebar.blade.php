@@ -162,6 +162,15 @@
 					{{ __('Approvals Setup') }}
 				</x-sidebar-link>
 			</li>
+			<li class="items-center">
+				<x-sidebar-link
+					:active="request()->routeIs('notes')"
+					:href="route('notes')"
+					modal
+				>
+					{{ __('FAQ / Notes') }}
+				</x-sidebar-link>
+			</li>
 		</ul>
 	</div>
 </nav>

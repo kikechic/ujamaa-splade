@@ -86,7 +86,7 @@
 
 .table.table-create tbody tr,
 .table.table-create thead tr {
-    @apply !h-full;
+    height: 100% !important;
 }
 
 .table.table-create th,
@@ -104,6 +104,11 @@
 
 .table.table-create thead td {
     @apply p-0;
+}
+
+.table.table-create tbody tr td input {
+    padding-left: 1px;
+    padding-right: 1px;
 }
 
 .table.table-index {

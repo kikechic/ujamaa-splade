@@ -13,6 +13,7 @@ use Kirschbaum\PowerJoins\PowerJoins;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Scopes\CompanyScopeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -64,6 +65,11 @@ class Timesheet extends Model
     public function timesheetComments(): HasMany
     {
         return $this->hasMany(TimesheetComment::class);
+    }
+
+    public function timesheetApproval(): HasOne
+    {
+        return $this->hasOne(TimesheetApproval::class)->withDefault();
     }
 
     public function isOpen(): bool

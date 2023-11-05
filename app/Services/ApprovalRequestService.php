@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Timesheet;
+use Illuminate\Http\Response;
 use App\Models\ApprovalRequest;
 use App\Enums\TimesheetStatusEnum;
 use Illuminate\Support\Facades\DB;
@@ -27,13 +28,17 @@ class ApprovalRequestService
     public function create(): ApprovalRequest
     {
         return DB::transaction(function () {
+            $approverId = auth()->user()->approval->approver_id;
+
+            abort_unless($approverId, Response::HTTP_FORBIDDEN, 'You cannot approve a timesheet for user without a supervisor');
+
             $this->approvalRequest = ApprovalRequest::query()->create([
                 'documentable_id' => $this->validated['documentable_id'],
                 'documentable_code' => $this->validated['documentable_code'],
                 'documentable_type' => (new Timesheet)->getMorphClass(),
                 'status' => 'pending',
                 'requester_id' => auth()->id(),
-                'approver_id' => auth()->user()->approval->approval_user_id,
+                'approver_id' => $approverId,
             ]);
 
             Timesheet::query()->where('id', $this->validated['documentable_id'])->update([
@@ -57,7 +62,7 @@ class ApprovalRequestService
         });
     }
 
-    public function delete()
+    public function delete(): void
     {
     }
 

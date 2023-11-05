@@ -36,7 +36,11 @@ class DesignationsTable extends AbstractTable
      */
     public function for()
     {
-        return Designation::query();
+        return Designation::query()
+            ->with([
+                'user:id,name',
+                'updater:id,name',
+            ]);
     }
 
     /**
@@ -65,6 +69,16 @@ class DesignationsTable extends AbstractTable
             ->column(
                 key: 'status',
                 label: __('Status'),
+            )
+            ->column(
+                key: 'user.name',
+                label: __('Created By'),
+                sortable: true,
+            )
+            ->column(
+                key: 'updater.name',
+                label: __('Updated By'),
+                sortable: true,
             )
             ->column(
                 key: 'actions',

@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Timesheet;
 use App\Models\TimesheetPeriod;
 use App\Models\DocumentSequence;
+use App\Models\TimesheetApproval;
 use App\Enums\TimesheetStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
@@ -354,6 +355,33 @@ class TimesheetService
             $this->timesheet->update([
                 'status' => TimesheetStatusEnum::posted(),
             ]);
+        });
+    }
+
+    public function approveTimesheet(): void
+    {
+        DB::transaction(function () {
+            if (data_get($this->validated, 'approve')) {
+                $this->timesheet->update([
+                    'status' => TimesheetStatusEnum::approved()
+                ]);
+
+                $this->timesheet->timesheetApproval()->create([
+                    'approval_date' => $this->validated['approval_date']
+                ]);
+            }
+
+            if (data_get($this->validated, 'reject')) {
+                $this->timesheet->update([
+                    'status' => TimesheetStatusEnum::rejected()
+                ]);
+            }
+
+            if (data_get($this->validated, 'return')) {
+                $this->timesheet->timesheetComments()->create([
+                    'comment' => $this->validated['comment'],
+                ]);
+            }
         });
     }
 }

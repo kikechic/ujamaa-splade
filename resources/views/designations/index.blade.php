@@ -18,13 +18,13 @@
 			:for="$designations"
 			search-debounce="500"
 		>
-			<x-splade-cell name>
+			<x-splade-cell code>
 				<x-splade-link
 					class="text-blue-600 hover:underline"
 					modal
 					:href="route('designations.show', $item)"
 				>
-					{{ $item->name }}
+					{{ $item->code }}
 				</x-splade-link>
 			</x-splade-cell>
 			<x-splade-cell status>

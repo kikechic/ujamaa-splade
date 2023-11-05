@@ -16,6 +16,7 @@ use App\Services\PrintTimesheetService;
 use App\Enums\TimesheetPeriodStatusEnum;
 use App\Http\Requests\StoreTimesheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
+use App\Http\Requests\ApproveTimesheetRequest;
 use App\Http\Requests\StoreTimesheetEntryRequest;
 
 class TimesheetController extends Controller
@@ -96,6 +97,7 @@ class TimesheetController extends Controller
             'timesheetPeriod:id,period_year,period_month',
             'employee:id,first_name,middle_name,last_name,employee_number',
             'timesheetEntries',
+            'timesheetComments',
         ]);
 
         $timesheetService = $timesheetService->setDocument($timesheet)->setTimesheetPeriod($timesheet->timesheetPeriod)->showFrontEnd();
@@ -199,5 +201,36 @@ class TimesheetController extends Controller
             ->stream($timesheet->timesheet_number, [
                 'Attachment' => 0,
             ]);
+    }
+
+    public function approveTimesheet(Timesheet $timesheet, TimesheetService $timesheetService)
+    {
+        $timesheet->load([
+            'user:id,name',
+            'updater:id,name',
+            'office:id,name',
+            'department:id,name',
+            'designation:id,name',
+            'timesheetPeriod:id,period_year,period_month',
+            'employee:id,first_name,middle_name,last_name,employee_number',
+            'timesheetEntries',
+            'timesheetComments',
+        ]);
+
+        $timesheetService = $timesheetService->setDocument($timesheet)->setTimesheetPeriod($timesheet->timesheetPeriod)->showFrontEnd();
+
+        return view('timesheets.approvals.show', [
+            'timesheet' => $timesheet,
+            'days' => $timesheetService->getDays(),
+            'totals' => $timesheetService->getTotals(),
+            'printURL' => route('timesheets.print', $timesheet),
+        ]);
+    }
+
+    public function approveTimesheetStore(ApproveTimesheetRequest $request, Timesheet $timesheet, TimesheetService $timesheetService)
+    {
+        $timesheetService->setTimesheet($timesheet)->setValidated($request->validated())->approveTimesheet();
+
+        return redirect()->back();
     }
 }

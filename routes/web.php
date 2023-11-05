@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonorController;
@@ -14,24 +16,24 @@ use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalRequestController;
 use App\Http\Controllers\TimesheetPeriodController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::middleware(['splade'])->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/', fn () => view('home'))->name('home');
+        Route::get('/', HomeController::class)->name('home');
+
+        Route::prefix('approvals')->group(function () {
+            Route::get('/', [ApprovalController::class, 'index'])->name('approvals.index');
+            Route::get('/{user}', [ApprovalController::class, 'show'])->name('approvals.show');
+            Route::get('/{user}/edit', [ApprovalController::class, 'edit'])->name('approvals.edit');
+            Route::put('/{user}/update', [ApprovalController::class, 'update'])->name('approvals.update');
+            Route::delete('/{user}', [ApprovalController::class, 'destroy'])->name('approvals.destroy');
+        });
+
         Route::resource('roles', RoleController::class);
+
         Route::resource('permissions', PermissionController::class);
 
         Route::put('/companies/switch', [CompanyController::class, 'switch'])->name('companies.switch');
@@ -53,6 +55,8 @@ Route::middleware(['splade'])->group(function () {
         Route::resource('users', UserController::class);
 
         Route::prefix('timesheets')->group(function () {
+            Route::get('{timesheet}/approve', [TimesheetController::class, 'approveTimesheet'])->name('timesheets.approve');
+            Route::post('{timesheet}/approve', [TimesheetController::class, 'approveTimesheetStore'])->name('timesheets.approve.store');
             Route::post('{timesheet}/post', [TimesheetController::class, 'postTimesheet'])->name('timesheets.post');
             Route::post('{timesheet}/post/print', [TimesheetController::class, 'postPrintTimesheet'])->name('timesheets.post.print');
             Route::get('/entry', [TimesheetController::class, 'entry'])->name('timesheets.entry');
@@ -77,13 +81,12 @@ Route::middleware(['splade'])->group(function () {
             ]
         ])->names('approvalRequests');
 
-        Route::prefix('users')->group(function () {
-            Route::get('/approvals', [ApprovalController::class, 'index'])->name('approvals.index');
-            Route::get('/{user}/approvals', [ApprovalController::class, 'show'])->name('approvals.show');
-            Route::get('/{user}/approvals/edit', [ApprovalController::class, 'edit'])->name('approvals.edit');
-            Route::put('/{user}/approvals/update', [ApprovalController::class, 'update'])->name('approvals.update');
-            Route::delete('/{user}/approvals', [ApprovalController::class, 'destroy'])->name('approvals.destroy');
+        Route::prefix('notifications')->group(function () {
+            Route::post('/mark-as-read', [NotificationController::class, 'markNotification'])->name('markNotification');
+            Route::get('/', [NotificationController::class, 'index'])->name('notifications.index');
         });
+
+        Route::get('notes', NoteController::class)->name('notes');
     });
 
     Auth::routes();

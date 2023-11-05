@@ -24,7 +24,7 @@ class PrintTimesheetService
 
         $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
 
-            $fontStyle = $fontMetrics->getFont("monospace", "normal");
+            $fontStyle = $fontMetrics->getFont("Helvetica", "normal");
             $canvasWidth = $canvas->get_width();
             $y = $canvas->get_height() - $this->margin;
 

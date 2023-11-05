@@ -79,17 +79,6 @@
 
 							<x-line-item>
 								<x-slot name="label">
-									{{ __('Signature') }}
-								</x-slot>
-								<img
-									src="{{ $user->signature }}"
-									width="150"
-									height="100"
-								/>
-							</x-line-item>
-
-							<x-line-item>
-								<x-slot name="label">
 									{{ __('Created at') }}
 								</x-slot>
 								{{ $user->created_at->format(config('fusion.timestamp_format')) }}
@@ -104,6 +93,20 @@
 					</x-splade-transition>
 
 					<x-section-border />
+
+					<div class="">
+						<h6 class="text-sm font-semibold text-blue-500">
+							{{ __('Signature') }}
+						</h6>
+					</div>
+
+					<x-section-border />
+
+					<img
+						src="{{ $user->signature }}"
+						width="150"
+						height="100"
+					/>
 
 					<x-section-border />
 

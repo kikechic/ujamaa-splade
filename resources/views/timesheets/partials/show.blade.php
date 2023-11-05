@@ -50,7 +50,13 @@
 					<x-slot name="label">
 						{{ __('Job ID') }}
 					</x-slot>
-					{{ $timesheet->employee->employee_number }}
+					<x-splade-link
+						class="text-blue-500 hover:underline"
+						modal
+						:href="route('employees.show', $timesheet->employee)"
+					>
+						{{ $timesheet->employee->employee_number }}
+					</x-splade-link>
 				</x-line-item>
 				<x-line-item>
 					<x-slot name="label">
@@ -78,21 +84,20 @@
 				@if ($approving ?? false)
 					<x-form-line-item>
 						<x-slot name="label">
-							{{ __('Submission Date') }}
+							{{ __('Approval Date') }}
 						</x-slot>
 						<x-splade-input
-							name="submission_date"
+							name="approval_date"
 							date
 						/>
 					</x-form-line-item>
-				@else
-					<x-line-item>
-						<x-slot name="label">
-							{{ __('Submission Date') }}
-						</x-slot>
-						{{ fusion_date_format($timesheet->submission_date) }}
-					</x-line-item>
 				@endif
+				<x-line-item>
+					<x-slot name="label">
+						{{ __('Submission Date') }}
+					</x-slot>
+					{{ fusion_date_format($timesheet->submission_date) }}
+				</x-line-item>
 
 				<x-line-item>
 					<x-slot name="label">
@@ -144,14 +149,13 @@
 	leave-from="opacity-100"
 	leave-to="opacity-0"
 >
-
 	<div class="">
 		<table class="table-view table w-full">
 			<thead>
 				<tr>
 					<th>Donor</th>
 					@foreach ($days as ['day' => $day, 'date' => $date, 'flag' => $flag])
-						<th class="!text-center">
+						<th @class(['!text-center', '!bg-red-100/70' => !$flag])>
 							<div>{{ $day }}</div>
 							<div>{{ $date }}</div>
 						</th>
@@ -165,7 +169,7 @@
 					<tr>
 						<td>{{ $timesheetEntry->donor->name }}</td>
 						@foreach ($days as $day)
-							<td @class(['text-center', 'bg-red-100/70' => !$day['flag']])>
+							<td @class(['text-center', '!bg-red-100/70' => !$day['flag']])>
 								@php
 									$columnName = 'day_' . $loop->iteration;
 								@endphp
@@ -183,7 +187,7 @@
 				<tr>
 					<th>{{ __('Grand Total') }}</th>
 					@foreach ($days as $dayIdx => $day)
-						<th>
+						<th @class(['text-center', '!bg-red-100/70' => !$day['flag']])>
 							{{ number_format(data_get($totals, "column_donor_totals.{$dayIdx}"), 2) }}
 						</th>
 					@endforeach
@@ -196,13 +200,67 @@
 		</table>
 	</div>
 </x-splade-transition>
-@if ($approving ?? false)
-	<div class="pt-5">
-		<x-form-line-item>
-			<x-slot:label>
-				{{ __('Comment') }}
-			</x-slot:label>
-			<x-splade-textarea name="comment" />
-		</x-form-line-item>
+
+<x-section-border />
+
+<div class="inline-flex w-full justify-between">
+	<h6
+		class="w-full cursor-pointer text-sm font-semibold text-blue-500"
+		@click="toggle('isTimesheetComments')"
+	>
+		{{ __('Timesheet Comments') }}
+	</h6>
+	<div class="inline-flex w-24 flex-nowrap justify-end">
+		<button
+			class="border-0 bg-transparent px-2 py-1"
+			v-show="!isTimesheetComments"
+			@click.prevent="toggle('isTimesheetComments')"
+		>
+			{{ __('Show more') }}
+		</button>
+		<button
+			class="border-0 bg-transparent px-2 py-1"
+			v-show="isTimesheetComments"
+			@click.prevent="toggle('isTimesheetComments')"
+		>
+			{{ __('Show less') }}
+		</button>
 	</div>
-@endif
+</div>
+
+<x-section-border />
+
+<x-splade-transition
+	show="isTimesheetComments"
+	enter="transition-opacity duration-75"
+	enter-from="opacity-0"
+	enter-to="opacity-100"
+	leave="transition-opacity duration-150"
+	leave-from="opacity-100"
+	leave-to="opacity-0"
+>
+	@if ($approving ?? false)
+		<div class="pt-5">
+			<x-form-line-item>
+				<x-slot:label>
+					{{ __('Comment') }}
+				</x-slot:label>
+				<x-splade-textarea name="comment" />
+			</x-form-line-item>
+		</div>
+	@endif
+	@forelse ($timesheet->timesheetComments as $timesheetComment)
+		<div>
+			<h4 class="text-lg text-slate-600">
+				{{ $timesheetComment->user->name }}
+			</h4>
+			<p class="">
+				{{ $timesheetComment->comment }}
+			</p>
+			<p>
+				{{ fusion_date_format($timesheetComment->created_at, config('fusion.timestamp_format')) }}
+			</p>
+		</div>
+	@empty
+	@endforelse
+</x-splade-transition>

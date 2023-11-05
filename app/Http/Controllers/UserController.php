@@ -91,6 +91,7 @@ class UserController extends Controller
             $user->roles()->sync($validated['roles']);
 
             if (request()->hasFile('signature')) {
+                $user->clearMediaCollection('signatures');
                 $user->addMediaFromRequest('signature')->toMediaCollection('signatures');
             }
 

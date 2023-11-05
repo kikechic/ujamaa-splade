@@ -73,7 +73,20 @@
 				<x-index-actions-dropdown>
 					<x-splade-rehydrate on="timesheet-status-updated-{{ $item->id }}">
 						@can('timesheets_update')
-							@unless ($item->isPosted() || $item->isApproved())
+							@unless ($item->isPosted() || $item->isApproved() || $item->isRejected())
+								<x-splade-link
+									class="index-actions text-green-500"
+									modal
+									:href="route('timesheets.approve', $item)"
+									v-close-popper="true"
+								>
+									<x-lucide-check class="h-4 w-4" />
+									{{ __('Approve') }}
+								</x-splade-link>
+							@endunless
+						@endcan
+						@can('timesheets_update')
+							@unless ($item->isPosted() || $item->isApproved() || $item->isRejected())
 								<x-splade-link
 									class="index-actions text-blue-600"
 									modal

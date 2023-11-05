@@ -7,6 +7,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use App\Traits\HasPermissionsTrait;
+use Kirschbaum\PowerJoins\PowerJoins;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -22,6 +23,7 @@ class User extends Authenticatable implements HasMedia
         HasFactory,
         Notifiable,
         HasPermissionsTrait,
+        PowerJoins,
         InteractsWithMedia;
 
     protected $fillable = [

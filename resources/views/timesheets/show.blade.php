@@ -10,6 +10,7 @@
 		<x-splade-toggle :data="[
 		    'isGeneral' => true,
 		    'isTimesheetLines' => true,
+		    'isTimesheetComments' => true,
 		]">
 			<x-dialog-modal>
 				<x-slot:title>{{ __('Timesheet') }}</x-slot:title>

@@ -4,6 +4,9 @@ import FloatingVue from "floating-vue";
 import "floating-vue/dist/style.css";
 import { createApp, defineAsyncComponent } from "vue/dist/vue.esm-bundler.js";
 import "../css/app.css";
+import "../css/choices.scss";
+import "../css/filepond.scss";
+import "../css/flatpickr.styl";
 import "./bootstrap";
 
 const el = document.getElementById("app");

@@ -142,8 +142,16 @@
 				vertical-align: top;
 			}
 
+			.align-bottom {
+				vertical-align: bottom;
+			}
+
 			.mt-4 {
 				margin-top: 16px;
+			}
+
+			.mt-8 {
+				margin-top: 32px;
 			}
 
 			.pb-3 {
@@ -280,7 +288,7 @@
 								scope="col"
 								@class([
 									'px-0 text-center border-t-2 border-b-2 border-l border-r',
-									'bg-red-100/70' => !$flag,
+									'bg-red-100' => !$flag,
 								])
 							>
 								<div>{{ $day }}</div>
@@ -320,7 +328,7 @@
 								{{ number_format(data_get($totals, "row_donor_totals.{$item->donor_id}"), 1) }}
 							</td>
 							<td class="border-r-2 text-right">
-								{{ data_get($totals, "row_donor_percentages.{$item->donor_id}") }}%
+								{{ number_format(data_get($totals, "row_donor_percentages.{$item->donor_id}"), 2) }}%
 							</td>
 						</tr>
 					@endforeach
@@ -335,7 +343,7 @@
 						@foreach ($days as $key => $value)
 							<th @class([
 								'pr-0 text-center border-t-2 border-b-2 border-l border-r total-amount',
-								'bg-red-100/70' => !$value['flag'],
+								'bg-red-100' => !$value['flag'],
 							])>
 								{{ number_format(data_get($totals, "column_donor_totals.{$key}"), 1) }}
 							</th>
@@ -343,14 +351,9 @@
 						<th class="border-b-2 border-l border-r border-t-2 text-right">
 							{{ number_format(data_get($totals, 'donor_total'), 1) }}
 						</th>
-						<th class="border-b-2 border-l border-r-2 border-t-2 text-right">100.00%
+						<th class="border-b-2 border-l border-r-2 border-t-2 text-right">
+							100.00%
 						</th>
-					</tr>
-					<tr>
-						<th
-							style="color: white"
-							colspan="{{ count($days) + 4 }}"
-						>HD</th>
 					</tr>
 				</tbody>
 			</table>
@@ -358,7 +361,7 @@
 			<p class="border-b border-t py-4">
 				@forelse ($leaveTypes as $leaveType)
 					<span style="margin-right: 10px">
-						<span>{{ $loop->index }}. </span>
+						<span>{{ ++$loop->index }}. </span>
 						{{ $leaveType->code }} -
 						{{ $leaveType->name }}
 					</span>
@@ -368,98 +371,93 @@
 
 			<x-printing-time />
 
-			<table class="table-signatures mt-4">
+			<table class="table-signature mt-8">
 				<tbody>
 					<tr>
-						<th
-							class="px-1 text-left"
-							style="width: 15%;"
-						></th>
-						<th
-							class="px-1 text-left"
-							style="width: 30%;"
+						<td
+							class="align-bottom"
+							style="width: 30% !important;"
 						>
-							<p>
-								{{ __('Approver Name') }}
-							</p>
-						</th>
-						<th
-							class="px-1 text-left"
-							style="width: 20%;"
+							<table style="width: 100%;">
+								<tbody>
+									<tr>
+										<td class="border-b align-bottom">
+											{{ $timesheet->user->name }}
+										</td>
+										<td class="border-b align-bottom">
+											{{ fusion_date_format($timesheet->submission_date) }}
+										</td>
+										<td class="border-b align-bottom">
+											@include('components.signature', [
+												'userId' => $timesheet->user_id,
+											])
+										</td>
+									</tr>
+									<tr>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Employee') }}
+										</td>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Date') }}
+										</td>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Signature') }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td style="width: 30% !important;"></td>
+						<td
+							class="align-bottom"
+							style="width: 30% !important;"
 						>
-							<p>
-								{{ __('Job Title') }}
-							</p>
-						</th>
-						<th
-							class="px-1 text-left"
-							style="width: 15%;"
-						>
-							<p>
-								{{ __('Approval Date') }}
-							</p>
-						</th>
-						<th
-							class="px-1 text-left"
-							style="width: 20%;"
-						>
-							<p>
-								{{ __('Signature') }}
-							</p>
-						</th>
-					</tr>
-					<tr>
-						<td class="px-1 text-left">
-							<p>
-								{{ __('Approved By') }}
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-								{{ $timesheet->user->name }}
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-								{{ fusion_date_format($timesheet->created_at) }}
-							</p>
-						</td>
-						<td>
-							@include('components.signature', [
-								'userId' => $timesheet->user_id,
-							])
-						</td>
-					</tr>
-					<tr>
-						<td class="px-1 text-left">
-							<p>
-								{{ __('Created By') }}
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-								{{ $timesheet->user->name }}
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-
-							</p>
-						</td>
-						<td class="px-1 text-left">
-							<p>
-								{{ fusion_date_format($timesheet->created_at) }}
-							</p>
-						</td>
-						<td>
-							@include('components.signature', [
-								'userId' => $timesheet->user_id,
-							])
+							<table>
+								<tbody>
+									<tr>
+										<td class="border-b px-1 text-left align-bottom">
+											{{ $timesheet->timesheetApproval->user->name }}
+										</td>
+										<td class="border-b align-bottom">
+											{{ fusion_date_format($timesheet->timesheetApproval->approval_date) }}
+										</td>
+										<td class="border-b align-bottom">
+											@include('components.signature', [
+												'userId' => $timesheet->timesheetApproval->user_id,
+											])
+										</td>
+									</tr>
+									<tr>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Supervisor') }}
+										</td>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Date') }}
+										</td>
+										<td
+											class="align-top"
+											style="font-weight: 600;"
+										>
+											{{ __('Signature') }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</td>
 					</tr>
 				</tbody>

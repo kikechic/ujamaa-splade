@@ -18,12 +18,13 @@
 			:for="$employees"
 			search-debounce="500"
 		>
-			<x-splade-cell name>
+			<x-splade-cell employee_number>
 				<x-splade-link
-					class="text-blue-600 hover:underline"
+					class="text-blue-600 hover:text-primary-500 hover:underline"
+					modal
 					:href="route('employees.show', $item)"
 				>
-					{{ $item->name }}
+					{{ $item->employee_number }}
 				</x-splade-link>
 			</x-splade-cell>
 			<x-splade-cell status>
