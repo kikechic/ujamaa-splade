@@ -1,10 +1,17 @@
 <div
-	class="border-b-1 h-16 min-h-[4rem] w-full border-slate-200 bg-slate-50 shadow-md"
+	class="sticky top-0 h-16 min-h-[4rem] w-full justify-center border-slate-200 bg-slate-50 py-3 pt-4 shadow-md"
 >
-	<nav class="block h-full w-full py-2 print:hidden">
+	<nav class="container px-4 mx-auto">
 		<div class="flex flex-row justify-between">
-			<div></div>
-			<div class="inline-flex w-48 items-center px-2">
+			<div class="w-10 ml-10">
+				<x-splade-link
+					class=""
+					href="#sidebar-modal"
+				>
+					<x-lucide-menu class="w-6 h-6" />
+				</x-splade-link>
+			</div>
+			<div class="inline-flex items-center w-48 px-2">
 				<x-splade-state>
 					<x-splade-form
 						method="PUT"

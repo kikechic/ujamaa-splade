@@ -13,7 +13,7 @@
 			{{ __('Permissions') }}
 		</x-slot:label>
 		<x-splade-select
-			name="permission_id"
+			name="permission_id[]"
 			v-model="form.permission_id"
 			:options="$permissions"
 			multiple

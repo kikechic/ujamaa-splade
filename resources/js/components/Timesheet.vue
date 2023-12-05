@@ -42,7 +42,7 @@ const updateColumnTotals = (cIdx) => {
 };
 
 const updateGrandTotal = () => {
-    props.form.grandTotal = numeral(props.form.grandDonorTotal)._value;
+    props.form.grandTotal = numeral(props.form.grandDonorTotal).value();
 };
 
 const updateDonorTotal = (rIdx, cIdx) => {
@@ -53,7 +53,7 @@ const updateDonorTotal = (rIdx, cIdx) => {
     props.form.hours.forEach((v, i) => {
         props.form.columnDonorTotals[cIdx] += numeral(
             props.form.hours[i][cIdx]
-        )._value;
+        ).value();
     });
 
     updateOverallDonorTotal();
@@ -63,7 +63,7 @@ const updateDonorTotal = (rIdx, cIdx) => {
     updateColumnTotals(cIdx);
 };
 
-const sum = (array) => array.reduce((p, c) => numeral(c)._value + p, 0);
+const sum = (array) => array.reduce((p, c) => numeral(c).value() + p, 0);
 
 const resetAllColumnTotals = () => {
     props.days.forEach((v, i) => {
@@ -79,10 +79,13 @@ const resetAllRowPercentagesAndTotals = () => {
     });
 };
 
-const resetSingleDonorColumnTotal = (index) =>
+const resetSingleDonorColumnTotal = (index) => {
     (props.form.columnDonorTotals[index] = 0);
+};
 
-const resetSingleColumnTotal = (index) => (props.form.columnTotals[index] = 0);
+const resetSingleColumnTotal = (index) => {
+    props.form.columnTotals[index] = 0;
+};
 
 const updateOverallDonorTotal = () => {
     props.form.grandDonorTotal = sum(props.form.rowDonorTotals);

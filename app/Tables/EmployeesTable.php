@@ -69,6 +69,12 @@ class EmployeesTable extends AbstractTable
                 canBeHidden: false,
             )
             ->column(
+                key: 'actions',
+                label: 'Actions',
+                canBeHidden: false,
+                alignment: 'center',
+            )
+            ->column(
                 key: 'first_name',
                 searchable: true,
                 sortable: true,
@@ -142,11 +148,6 @@ class EmployeesTable extends AbstractTable
                 label: __('Updated At'),
                 as: fn ($date, $row) => fusion_date_format($date, config('fusion.timestamp_format')),
                 hidden: true,
-            )
-            ->column(
-                key: 'actions',
-                label: 'Actions',
-                canBeHidden: false
             )
             ->selectFilter(
                 key: 'status',

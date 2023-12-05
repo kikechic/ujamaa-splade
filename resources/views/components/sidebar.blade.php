@@ -1,28 +1,18 @@
-<nav
-	class="relative z-10 flex flex-wrap justify-between bg-white px-6 py-4 !text-sm shadow-xl md:fixed md:bottom-0 md:left-0 md:top-0 md:block md:w-64 md:flex-row md:flex-nowrap md:overflow-hidden md:overflow-y-auto"
+<x-splade-modal
+	name="sidebar-modal"
+	slideover
+	position="left"
 >
-	<div
-		class="mx-auto flex w-full flex-wrap items-center justify-start px-0 md:min-h-full md:flex-col md:flex-nowrap md:items-stretch"
-	>
-		<x-splade-link
-			class="mr-0 inline-block whitespace-nowrap p-4 px-0 text-left text-xl font-bold uppercase text-blueGray-700 md:block md:pb-2"
-			:href="route('home')"
-		>
-			<x-company-logo />
-		</x-splade-link>
-
-		<!-- Divider -->
-		<hr class="mb-6 md:min-w-full" />
-
-		<ul class="flex list-none flex-col justify-start md:min-w-full md:flex-col">
-			<li class="items-center">
+	<div class="px-2 xl:px-8">
+		<ul class="list-none">
+			<li class="items-center font-bold">
 				<x-splade-link
 					:class="request()->routeIs('home')
 					    ? 'sidebar-nav-active'
 					    : 'sidebar-nav'"
 					:href="route('home')"
 				>
-					<x-lucide-tv class="mr-2 h-4 w-4" />
+					<x-lucide-tv class="w-4 h-4 mr-2" />
 					{{ __('Dashboard') }}
 				</x-splade-link>
 			</li>
@@ -173,4 +163,5 @@
 			</li>
 		</ul>
 	</div>
-</nav>
+
+</x-splade-modal>

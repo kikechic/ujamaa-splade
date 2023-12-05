@@ -6,10 +6,11 @@
 	>
 		<x-splade-form
 			method="POST"
+			keep-modal
 			:action="route('timesheets.entry.store')"
 			:default="[
 			    'timesheet_exists' => 'check',
-			    'timesheet_period_id',
+			    'timesheet_period_id' => '',
 			]"
 		>
 			<x-dialog-modal>
@@ -45,11 +46,8 @@
 					<x-splade-submit>
 						{{ __('Submit') }}
 					</x-splade-submit>
-					<x-splade-button
-						type="button"
-						@click="modal.close"
-					>
-						{{ __('Back') }}
+					<x-splade-button @click.prevent="modal.close">
+						{{ __('Close') }}
 					</x-splade-button>
 				</x-slot:footer>
 			</x-dialog-modal>

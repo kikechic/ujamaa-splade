@@ -31,6 +31,7 @@ class RoleService
     {
         return DB::transaction(function () {
             $this->role = Role::query()->create($this->validated);
+            $this->role->permissions()->sync($this->validated['permission_id']);
             return $this->role;
         });
     }
@@ -39,6 +40,7 @@ class RoleService
     {
         DB::transaction(function () {
             $this->role->update($this->validated);
+            $this->role->permissions()->sync($this->validated['permission_id']);
         });
     }
 

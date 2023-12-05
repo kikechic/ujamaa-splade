@@ -1,6 +1,5 @@
 @seoTitle(__('Timesheet'))
 <x-app-layout>
-
 	<x-splade-modal
 		class="!p-0"
 		position="top"
@@ -13,7 +12,9 @@
 		    'isTimesheetComments' => true,
 		]">
 			<x-dialog-modal>
-				<x-slot:title>{{ __('Timesheet') }}</x-slot:title>
+				<x-slot:title>
+					{{ __('Timesheet') }}
+				</x-slot:title>
 				<x-slot:content>
 					<x-splade-data :default="['status' => $timesheet->status->value]">
 						<x-splade-form
@@ -144,10 +145,9 @@
 					</x-splade-data>
 				</x-slot:content>
 				<x-slot:footer>
-					<x-splade-button
-						@click="modal.close"
-						:label="__('Close')"
-					/>
+					<x-splade-button @click.prevent="modal.close">
+						{{ __('Close') }}
+					</x-splade-button>
 				</x-slot:footer>
 			</x-dialog-modal>
 		</x-splade-toggle>

@@ -139,7 +139,8 @@ class TimesheetsTable extends AbstractTable
             )
             ->column(
                 key: 'actions',
-                label: __('Actions')
+                label: __('Actions'),
+                alignment: 'center',
             )
             ->selectFilter(
                 key: 'timesheetPeriod.id',

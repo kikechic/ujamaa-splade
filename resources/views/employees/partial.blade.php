@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-4">
+<div class="form-line-items-container">
 	<x-form-line-item required>
 		<x-slot:label>
 			{{ __('Employee Number') }}
