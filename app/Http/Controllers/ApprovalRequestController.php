@@ -35,7 +35,7 @@ class ApprovalRequestController extends Controller
             return back();
         }
 
-        if ($approval->approver_id) {
+        if (!$approval->approver_id) {
             Toast::warning("An approver for " . auth()->user()->name . " is not specified")->autoDismiss(3);
             return back();
         }
