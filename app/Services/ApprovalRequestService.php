@@ -30,8 +30,6 @@ class ApprovalRequestService
         return DB::transaction(function () {
             $approverId = auth()->user()->approval->approver_id;
 
-            abort_unless($approverId, Response::HTTP_FORBIDDEN, 'You cannot approve a timesheet for user without a supervisor');
-
             $this->approvalRequest = ApprovalRequest::query()->create([
                 'documentable_id' => $this->validated['documentable_id'],
                 'documentable_code' => $this->validated['documentable_code'],
