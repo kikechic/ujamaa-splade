@@ -30,7 +30,7 @@ class ApprovalRequestController extends Controller
         // Check if approver has been set and allow request only if approver is set.
         $approval = auth()->user()->approval;
 
-        if (!$approval->approveral_user_id) {
+        if (!$approval->approval_user_id) {
             Toast::warning("No approval workflow set for " . auth()->user()->name)->autoDismiss(3);
             return back();
         }

@@ -84,7 +84,7 @@
 							confirm-button="Yes, post!"
 							cancel-button="No, cancel"
 							action="{{ route('timesheets.post.print', $timesheet) }}"
-							@success="$splade.emit('timesheet-status-updated-' + {{ $timesheet->id }}); $splade.emit('print-payment-timesheet', {link: `{{ $printURL }}`}); data.status = `{{ \App\Enums\TimesheetStatusEnum::posted() }}`"
+							@success="$splade.emit('timesheet-status-updated-' + {{ $timesheet->id }}); $splade.emit('print-timesheet', {link: `{{ $printURL }}`}); data.status = `{{ \App\Enums\TimesheetStatusEnum::posted() }}`"
 						>
 						</x-splade-form>
 
