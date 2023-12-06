@@ -11,31 +11,33 @@
 					<x-lucide-menu class="h-6 w-6" />
 				</x-splade-link>
 			</div>
-			<div class="inline-flex w-48 items-center px-2">
-				<x-splade-state>
-					<x-splade-form
-						method="PUT"
-						:action="route('companies.switch')"
-						:default="['new_company' => auth()->user()->current_company_id]"
-						submit-on-change="new_company"
-					>
-						<x-splade-select
-							name="new_company"
-							v-model="form.new_company"
-						>
-							<template v-for="company in state.shared.companies">
-								<option :value="company.id">
-									@{{ company.name }}
-								</option>
-							</template>
-						</x-splade-select>
-					</x-splade-form>
-				</x-splade-state>
-			</div>
 			<div class="inline-flex">
+				<div class="inline-flex w-48 items-center px-2">
+					<x-splade-state>
+						<x-splade-form
+							method="PUT"
+							:action="route('companies.switch')"
+							:default="['new_company' => auth()->user()->current_company_id]"
+							submit-on-change="new_company"
+						>
+							<x-splade-select
+								name="new_company"
+								v-model="form.new_company"
+							>
+								<template v-for="company in state.shared.companies">
+									<option :value="company.id">
+										@{{ company.name }}
+									</option>
+								</template>
+							</x-splade-select>
+						</x-splade-form>
+					</x-splade-state>
+				</div>
+
 				<div class="w-32 overflow-ellipsis whitespace-nowrap align-middle">
 					{{ auth()->user()->name }}
 				</div>
+
 				<div class="inline-flex w-10 flex-row items-center">
 					<x-splade-link
 						class="inline-flex flex-row items-center"
