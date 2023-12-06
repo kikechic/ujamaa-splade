@@ -1,7 +1,7 @@
 <x-splade-errors>
 	<div class="grid grid-cols-1">
 		<div class="flex flex-col overflow-x-auto">
-			<table class="table-view table min-w-[1600px]">
+			<table class="table-create table min-w-[1600px]">
 				<thead>
 					<tr>
 						<th>Donor</th>
