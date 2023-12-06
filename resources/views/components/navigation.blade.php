@@ -43,7 +43,7 @@
 					confirm
 					confirm-text="Logout?"
 				>
-					<x-lucide-logout class="h-4 w-4" />
+					<x-lucide-log-out class="h-4 w-4" />
 					{{ __('Logout') }}
 				</x-splade-link>
 			</div>
