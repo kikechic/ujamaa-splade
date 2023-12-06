@@ -32,22 +32,24 @@
 					</x-splade-form>
 				</x-splade-state>
 			</div>
-			<div class="w-10 overflow-ellipsis align-middle">
-				{{ auth()->user()->name }}
-			</div>
-			<div class="inline-flex w-10 flex-row items-center">
-				<x-splade-link
-					class="inline-flex flex-row items-center"
-					:href="route('logout')"
-					method="POST"
-					confirm
-					confirm-text="Logout?"
-				>
-					<x-lucide-log-out class="h-4 w-4" />
-					<span class="ml-2 hidden md:block">
-						{{ __('Logout') }}
-					</span>
-				</x-splade-link>
+			<div class="inline-flex">
+				<div class="w-32 overflow-ellipsis whitespace-nowrap align-middle">
+					{{ auth()->user()->name }}
+				</div>
+				<div class="inline-flex w-10 flex-row items-center">
+					<x-splade-link
+						class="inline-flex flex-row items-center"
+						:href="route('logout')"
+						method="POST"
+						confirm
+						confirm-text="Logout?"
+					>
+						<x-lucide-log-out class="h-4 w-4" />
+						<span class="ml-2 hidden md:block">
+							{{ __('Logout') }}
+						</span>
+					</x-splade-link>
+				</div>
 			</div>
 		</div>
 	</nav>
