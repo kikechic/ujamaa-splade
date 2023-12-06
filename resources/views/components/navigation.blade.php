@@ -34,14 +34,14 @@
 			</div>
 			<div class="w-10">
 				<x-splade-button-with-dropdown>
-					<x-slot:trigger>
+					<x-slot:button>
 						<button
 							class="h-8 w-8 rounded-full bg-primary-500 text-base uppercase text-white"
 							type="button"
 						>
 							{{ substr(auth()->user()->name, 0, 1) }}
 						</button>
-					</x-slot:trigger>
+					</x-slot:button>
 					<div
 						class="flex flex-col justify-start gap-3 whitespace-nowrap rounded-md bg-white p-3 shadow-md"
 						role="menu"
