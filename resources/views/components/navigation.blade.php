@@ -43,25 +43,20 @@
 						</button>
 					</x-slot:button>
 					<div
-						class="flex flex-col justify-start gap-3 whitespace-nowrap rounded-md bg-white p-3 shadow-md"
-						role="menu"
+						class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
 					>
-						<div
-							class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
+						{{ auth()->user()->name }}
+					</div>
+					<div
+						class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
+					>
+						<x-splade-link
+							:href="route('logout')"
+							method="POST"
+							confirm
 						>
-							{{ auth()->user()->name }}
-						</div>
-						<div
-							class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
-						>
-							<x-splade-link
-								:href="route('logout')"
-								method="POST"
-								confirm
-							>
-								{{ __('Logout') }}
-							</x-splade-link>
-						</div>
+							{{ __('Logout') }}
+						</x-splade-link>
 					</div>
 				</x-splade-button-with-dropdown>
 			</div>
