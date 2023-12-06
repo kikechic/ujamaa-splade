@@ -22,7 +22,7 @@ use App\Http\Controllers\ApprovalRequestController;
 use App\Http\Controllers\TimesheetPeriodController;
 
 Route::get('ssh', function () {
-    Artisan::class('storage:link');
+    Artisan::call('storage:link');
     // Artisan::call('migrate --seed');
 });
 
