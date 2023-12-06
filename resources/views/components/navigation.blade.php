@@ -34,8 +34,12 @@
 					</x-splade-state>
 				</div>
 
-				<div class="w-32 overflow-ellipsis whitespace-nowrap align-middle">
-					{{ auth()->user()->name }}
+				<div
+					class="inline-flex w-32 items-center overflow-ellipsis whitespace-nowrap align-middle"
+				>
+					<span>
+						{{ auth()->user()->name }}
+					</span>
 				</div>
 
 				<div class="inline-flex w-10 flex-row items-center">
