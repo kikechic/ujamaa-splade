@@ -44,7 +44,9 @@
 					confirm-text="Logout?"
 				>
 					<x-lucide-log-out class="h-4 w-4" />
-					{{ __('Logout') }}
+					<span class="ml-2 hidden md:block">
+						{{ __('Logout') }}
+					</span>
 				</x-splade-link>
 			</div>
 		</div>
