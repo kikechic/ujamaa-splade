@@ -23,7 +23,7 @@ use App\Http\Controllers\TimesheetPeriodController;
 
 Route::get('ssh', function () {
     Artisan::class('storage:link');
-    Artisan::call('migrate --seed');
+    // Artisan::call('migrate --seed');
 });
 
 Route::middleware(['splade'])->group(function () {
