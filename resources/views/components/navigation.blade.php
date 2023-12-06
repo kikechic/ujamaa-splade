@@ -35,12 +35,7 @@
 			<div class="w-10">
 				<x-splade-button-with-dropdown>
 					<x-slot:button>
-						<button
-							class="h-8 w-8 rounded-full bg-primary-500 text-base uppercase text-white"
-							type="button"
-						>
-							{{ substr(auth()->user()->name, 0, 1) }}
-						</button>
+						{{ substr(auth()->user()->name, 0, 1) }}
 					</x-slot:button>
 					<div
 						class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
