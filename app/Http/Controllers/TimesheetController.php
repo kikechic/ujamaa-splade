@@ -149,9 +149,10 @@ class TimesheetController extends Controller
     public function missingReportEntry()
     {
         $timesheetPeriods = TimesheetPeriod::query()
+            ->orderBy('period_year', 'desc')
+            ->orderBy('period_month', 'desc')
             ->get()
             ->keyBy('id')
-            ->orderBy('period_year', 'desc')
             ->map(fn ($timesheetPeriod) => "$timesheetPeriod->period_year ~ $timesheetPeriod->month_name");
 
         return view('timesheets.reports.missing-entry', compact('timesheetPeriods'));
