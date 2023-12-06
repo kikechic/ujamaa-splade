@@ -32,28 +32,18 @@
 					</x-splade-form>
 				</x-splade-state>
 			</div>
+			<div class="w-10 overflow-ellipsis">
+				{{ auth()->user()->name }}
+			</div>
 			<div class="w-10">
-				<x-splade-button-with-dropdown>
-					<x-slot:button>
-						{{ substr(auth()->user()->name, 0, 1) }}
-					</x-slot:button>
-					<div
-						class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
-					>
-						{{ auth()->user()->name }}
-					</div>
-					<div
-						class="px-2 py-2 uppercase hover:cursor-pointer hover:rounded-md hover:bg-gray-100"
-					>
-						<x-splade-link
-							:href="route('logout')"
-							method="POST"
-							confirm
-						>
-							{{ __('Logout') }}
-						</x-splade-link>
-					</div>
-				</x-splade-button-with-dropdown>
+				<x-splade-link
+					:href="route('logout')"
+					method="POST"
+					confirm
+					confirm-text="Logout?"
+				>
+					{{ __('Logout') }}
+				</x-splade-link>
 			</div>
 		</div>
 	</nav>
