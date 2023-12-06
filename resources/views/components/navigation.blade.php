@@ -3,7 +3,7 @@
 >
 	<nav class="container mx-auto px-4">
 		<div class="flex flex-row justify-between">
-			<div class="ml-10 w-10">
+			<div class="w-10">
 				<x-splade-link
 					class=""
 					href="#sidebar-modal"
@@ -33,15 +33,15 @@
 				</x-splade-state>
 			</div>
 			<div class="w-10">
-				<Dropdown>
-					<template #trigger>
+				<x-splade-button-with-dropdown>
+					<x-slot:trigger>
 						<button
 							class="h-8 w-8 rounded-full bg-primary-500 text-base uppercase text-white"
 							type="button"
 						>
 							{{ substr(auth()->user()->name, 0, 1) }}
 						</button>
-					</template>
+					</x-slot:trigger>
 					<div
 						class="flex flex-col justify-start gap-3 whitespace-nowrap rounded-md bg-white p-3 shadow-md"
 						role="menu"
@@ -63,7 +63,7 @@
 							</x-splade-link>
 						</div>
 					</div>
-				</Dropdown>
+				</x-splade-button-with-dropdown>
 			</div>
 		</div>
 	</nav>
