@@ -11,7 +11,7 @@
 					<x-lucide-menu class="h-6 w-6" />
 				</x-splade-link>
 			</div>
-			<div class="inline-flex space-x-2">
+			<div class="inline-flex">
 				<div class="inline-flex w-48 items-center px-2">
 					<x-splade-state>
 						<x-splade-form
@@ -35,7 +35,7 @@
 				</div>
 
 				<div
-					class="inline-flex w-32 items-center overflow-ellipsis whitespace-nowrap align-middle"
+					class="mr-2 inline-flex w-32 items-center overflow-ellipsis whitespace-nowrap align-middle"
 				>
 					<span>
 						{{ auth()->user()->name }}
