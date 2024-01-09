@@ -20,7 +20,6 @@ class CompaniesTableSeeder extends Seeder
 
         $companies = [
             ['name' => 'Ujamaa Africa - Kenya'],
-            ['name' => 'Ujamaa Africa - Somalia'],
         ];
 
         foreach ($companies as $company) {

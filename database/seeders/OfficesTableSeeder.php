@@ -23,8 +23,6 @@ class OfficesTableSeeder extends Seeder
             ['code' => 'KBR', 'name' => 'Kibera', 'created_at' => '2023-11-04  22:00:00', 'updated_at' => '2023-11-04  22:00:00', 'user_id' => '84', 'company_id' => '1', 'status' => '1',],
             ['code' => 'KKM', 'name' => 'Kakuma', 'created_at' => '2023-11-04  22:00:00', 'updated_at' => '2023-11-04  22:00:00', 'user_id' => '84', 'company_id' => '1', 'status' => '1',],
             ['code' => 'HRM', 'name' => 'Huruma', 'created_at' => '2023-11-04  22:00:00', 'updated_at' => '2023-11-04  22:00:00', 'user_id' => '84', 'company_id' => '1', 'status' => '1',],
-            ['code' => 'HQ', 'name' => 'Headquarters', 'created_at' => '2023-11-04  22:00:00', 'updated_at' => '2023-11-04  22:00:00', 'user_id' => '84', 'company_id' => '2', 'status' => '1',],
-
         ];
 
         Office::query()->truncate();

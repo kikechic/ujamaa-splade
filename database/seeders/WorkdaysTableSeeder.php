@@ -26,14 +26,6 @@ class WorkdaysTableSeeder extends Seeder
             ['name' => 'Friday', 'status' => true, 'company_id' => 1],
             ['name' => 'Saturday', 'status' => false, 'company_id' => 1],
             ['name' => 'Sunday', 'status' => false, 'company_id' => 1],
-
-            ['name' => 'Monday', 'status' => true, 'company_id' => 2],
-            ['name' => 'Tuesday', 'status' => true, 'company_id' => 2],
-            ['name' => 'Wednesday', 'status' => true, 'company_id' => 2],
-            ['name' => 'Thursday', 'status' => true, 'company_id' => 2],
-            ['name' => 'Friday', 'status' => false, 'company_id' => 2],
-            ['name' => 'Saturday', 'status' => false, 'company_id' => 2],
-            ['name' => 'Sunday', 'status' => true, 'company_id' => 2],
         ];
 
         foreach ($days as $day) {

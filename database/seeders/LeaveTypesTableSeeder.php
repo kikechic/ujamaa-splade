@@ -28,14 +28,12 @@ class LeaveTypesTableSeeder extends Seeder
         ];
 
         foreach ($leaveTypes as $code => $name) {
-            foreach ([1, 2] as $id) {
-                LeaveType::query()->create([
-                    'code' => $code,
-                    'name' => $name,
-                    'company_id' => $id,
-                    'user_id' => '84',
-                ]);
-            }
+            LeaveType::query()->create([
+                'code' => $code,
+                'name' => $name,
+                'company_id' => 1,
+                'user_id' => '84',
+            ]);
         }
     }
 }
