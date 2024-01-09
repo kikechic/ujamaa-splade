@@ -20,7 +20,7 @@ class PermissionsTableSeeder extends Seeder
         foreach ($permissions as $permission) {
             foreach (['access', 'create', 'update', 'delete'] as $type) {
                 Permission::query()->create([
-                    'name' => "{$type}_{$permission}",
+                    'name' => "{$permission}_{$type}",
                 ]);
             }
         }

@@ -24,21 +24,16 @@ class PermissionServiceProvider extends ServiceProvider
     {
         if (Schema::hasTable('permissions')) {
             Gate::before(function ($user, $ability) {
-                $special = [
-                    'Thomas Kikechi',
-                    'Kikechi Thomas',
-                    'Clinton Kikechi',
-                    'Clinton Thomas'
-                ];
-
-                if ($user->hasRole('Superadministrator') || in_array(trim(str_replace('  ', ' ', $user->name)), $special)) {
+                if ($user->hasRole('Superadministrator')) {
                     return true;
                 }
             });
 
-            Permission::get()->map(function ($permission) {
+            $permissions = Permission::query()->get();
+
+            $permissions->map(function ($permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
-                    return $user->hasPermission($permission);
+                    return $user->hasPermissionTo($permission);
                 });
             });
         }

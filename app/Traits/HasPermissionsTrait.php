@@ -66,7 +66,7 @@ trait HasPermissionsTrait
         return $this->belongsToMany(Permission::class);
     }
 
-    protected function hasPermission($permission)
+    protected function hasPermission($permission): bool
     {
         return (bool) $this->permissions->where('name', $permission->name)->count();
     }
