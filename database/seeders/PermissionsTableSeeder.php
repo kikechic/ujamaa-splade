@@ -24,5 +24,9 @@ class PermissionsTableSeeder extends Seeder
                 ]);
             }
         }
+
+        Permission::query()->create([
+            'name' => 'access_all_timesheets',
+        ]);
     }
 }

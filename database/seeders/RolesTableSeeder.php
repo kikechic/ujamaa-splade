@@ -24,7 +24,10 @@ class RolesTableSeeder extends Seeder
         foreach ($roles as $role) {
             $roleDB = Role::query()->create($role);
             if ($role['name'] == 'Superadministrator') {
-                $roleDB->permissions()->sync(range(1, count($permissions) * 4));
+                $roleDB->permissions()->sync(array_merge(
+                    range(1, count($permissions) * 4),
+                    [count($permissions) * 4 + 1]
+                ));
                 $roleDB->users()->sync([84, 89]);
             }
             if ($role['name'] == 'User') {

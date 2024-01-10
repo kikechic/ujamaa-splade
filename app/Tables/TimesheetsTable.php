@@ -41,7 +41,9 @@ class TimesheetsTable extends AbstractTable
     public function for()
     {
         return Timesheet::query()
-            ->where('user_id', auth()->id())
+            ->when(!auth()->user()->can('access_all_timesheets'), function ($q) {
+                $q->where('user_id', auth()->id());
+            })
             ->with([
                 'employee',
                 'department',
