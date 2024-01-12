@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class ApprovalRequestService
 {
-    protected array $validated;
+    protected Timesheet $timesheet;
     protected ApprovalRequest $approvalRequest;
 
-    public function setValidated(array $validated): self
+    public function setTimesheet(Timesheet $timesheet): self
     {
-        $this->validated = $validated;
+        $this->timesheet = $timesheet;
         return $this;
     }
 
@@ -31,15 +31,13 @@ class ApprovalRequestService
             $approverId = auth()->user()->approval->approver_id;
 
             $this->approvalRequest = ApprovalRequest::query()->create([
-                'documentable_id' => $this->validated['documentable_id'],
-                'documentable_code' => $this->validated['documentable_code'],
-                'documentable_type' => (new Timesheet)->getMorphClass(),
+                'timesheet_id' => $this->timesheet->id,
                 'status' => 'pending',
                 'requester_id' => auth()->id(),
                 'approver_id' => $approverId,
             ]);
 
-            Timesheet::query()->where('id', $this->validated['documentable_id'])->update([
+            Timesheet::query()->where('id', $this->timesheet->id)->update([
                 'status' => TimesheetStatusEnum::pending(),
             ]);
 
@@ -54,7 +52,7 @@ class ApprovalRequestService
                 'status' => 'approved',
             ]);
 
-            Timesheet::query()->where('id', $this->validated['documentable_id'])->update([
+            Timesheet::query()->where('id', $this->approvalRequest->timesheet_id)->update([
                 'status' => TimesheetStatusEnum::approved(),
             ]);
         });
@@ -68,15 +66,14 @@ class ApprovalRequestService
     {
         DB::transaction(function () {
             ApprovalRequest::query()
-                ->where('documentable_id', $this->validated['documentable_id'])
-                ->where('documentable_code', 'timesheet')
+                ->where('timesheet_id', $this->timesheet->id)
                 ->where('approver_id', auth()->id())
                 ->update([
                     'status' => 'approved'
                 ]);
 
             Timesheet::query()
-                ->where('id', $this->validated['documentable_id'])
+                ->where('id', $this->timesheet->id)
                 ->update([
                     'status' => TimesheetStatusEnum::approved(),
                 ]);
@@ -87,15 +84,14 @@ class ApprovalRequestService
     {
         DB::transaction(function () {
             ApprovalRequest::query()
-                ->where('documentable_id', $this->validated['documentable_id'])
-                ->where('documentable_code', 'timesheet')
+                ->where('timesheet_id', $this->timesheet->id)
                 ->where('approver_id', auth()->id())
                 ->update([
                     'status' => 'rejected'
                 ]);
 
             Timesheet::query()
-                ->where('id', $this->validated['documentable_id'])
+                ->where('id', $this->timesheet->id)
                 ->update([
                     'status' => TimesheetStatusEnum::open(),
                 ]);

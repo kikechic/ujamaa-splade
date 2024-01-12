@@ -35,7 +35,7 @@ class DepartmentController extends Controller
 
         $departmentService->setValidated($request->validated())->create();
 
-        Toast::title("Department created successfully")->autoDismiss(3);
+        Toast::title("Department created.")->autoDismiss(3);
 
         return redirect()->route('departments.index');
     }
@@ -64,7 +64,7 @@ class DepartmentController extends Controller
 
         $departmentService->setValidated($request->validated())->setDepartment($department)->update();
 
-        Toast::title("Department updated successfully")->autoDismiss(3);
+        Toast::title("Department updated.")->autoDismiss(3);
 
         return redirect()->route('departments.index');
     }
@@ -75,7 +75,7 @@ class DepartmentController extends Controller
 
         $departmentService->setDepartment($department)->delete();
 
-        Toast::title("Department deleted successfully")->autoDismiss(3);
+        Toast::title("Department deleted.")->autoDismiss(3);
 
         return redirect()->route('departments.index');
     }

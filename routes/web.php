@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\ReopenApprovedTimesheetAction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -19,13 +20,14 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalRequestController;
+use App\Http\Controllers\ReopenApprovedTimesheetController;
 use App\Http\Controllers\TimesheetPeriodController;
 
-Route::get('ssh', function () {
-    // Artisan::call('storage:link');
-    // Artisan::call('migrate --seed');
-    Artisan::call('optimize:clear');
-});
+// Route::get('ssh', function () {
+//     // Artisan::call('storage:link');
+//     // Artisan::call('migrate --seed');
+//     Artisan::call('optimize:clear');
+// });
 
 Route::middleware(['splade'])->group(function () {
     Route::middleware('auth')->group(function () {
@@ -71,6 +73,7 @@ Route::middleware(['splade'])->group(function () {
             Route::get('/reports/missing/entry', [TimesheetController::class, 'missingReportEntry'])->name('timesheets.reports.missing.entry');
             Route::get('/reports/missing', [TimesheetController::class, 'missingReport'])->name('timesheets.reports.missing');
             Route::get('{timesheet}/print', [TimesheetController::class, 'print'])->name('timesheets.print');
+            Route::post('{timesheet}/approved/reopen', ReopenApprovedTimesheetController::class)->name('timesheets.approved.reopen');
         });
         Route::resource('timesheets', TimesheetController::class);
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Gate;
 use ProtoneMedia\Splade\Facades\Toast;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class RoleController extends Controller
 {
@@ -38,9 +39,9 @@ class RoleController extends Controller
 
         $roleService->setValidated($request->validated())->create();
 
-        Toast::title("Role created successfully")->autoDismiss(3);
+        Toast::title("Role created.")->autoDismiss(3);
 
-        return redirect()->route('roles.index');
+        return Redirect::route('roles.index');
     }
 
     public function show(Role $role)
@@ -68,9 +69,9 @@ class RoleController extends Controller
 
         $roleService->setValidated($request->validated())->setRole($role)->update();
 
-        Toast::title("Role updated successfully")->autoDismiss(3);
+        Toast::title("Role updated.")->autoDismiss(3);
 
-        return redirect()->route('roles.index');
+        return Redirect::route('roles.index');
     }
 
     public function destroy(Role $role, RoleService $roleService)
@@ -79,8 +80,8 @@ class RoleController extends Controller
 
         $roleService->setRole($role)->delete();
 
-        Toast::title("Role deleted successfully")->autoDismiss(3);
+        Toast::title("Role deleted.")->autoDismiss(3);
 
-        return redirect()->route('roles.index');
+        return Redirect::route('roles.index');
     }
 }

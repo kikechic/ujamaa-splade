@@ -35,7 +35,7 @@ class OfficeController extends Controller
 
         $officeService->setValidated($request->validated())->create();
 
-        Toast::title("Office created successfully")->autoDismiss(3);
+        Toast::title("Office created.")->autoDismiss(3);
 
         return redirect()->route('offices.index');
     }
@@ -64,7 +64,7 @@ class OfficeController extends Controller
 
         $officeService->setValidated($request->validated())->setOffice($office)->update();
 
-        Toast::title("Office updated successfully")->autoDismiss(3);
+        Toast::title("Office updated.")->autoDismiss(3);
 
         return redirect()->route('offices.index');
     }
@@ -75,7 +75,7 @@ class OfficeController extends Controller
 
         $officeService->setOffice($office)->delete();
 
-        Toast::title("Office deleted successfully")->autoDismiss(3);
+        Toast::title("Office deleted.")->autoDismiss(3);
 
         return redirect()->route('offices.index');
     }

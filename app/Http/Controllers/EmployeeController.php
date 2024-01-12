@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 use ProtoneMedia\Splade\Facades\Toast;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class EmployeeController extends Controller
 {
@@ -42,9 +43,9 @@ class EmployeeController extends Controller
 
         $employee = $employeeService->setValidated($request->validated())->create();
 
-        Toast::title("Employee $employee->employee_number created successfully")->autoDismiss(3);
+        Toast::title("Employee $employee->employee_number created.")->autoDismiss(3);
 
-        return redirect()->route('employees.index');
+        return Redirect::route('employees.index');
     }
 
     public function show(Employee $employee)
@@ -74,9 +75,9 @@ class EmployeeController extends Controller
 
         $employeeService->setValidated($request->validated())->setEmployee($employee)->update();
 
-        Toast::title("Employee $employee->employee_number updated successfully")->autoDismiss(3);
+        Toast::title("Employee $employee->employee_number updated.")->autoDismiss(3);
 
-        return redirect()->route('employees.index');
+        return Redirect::route('employees.index');
     }
 
     public function destroy(Employee $employee, EmployeeService $employeeService)
@@ -85,8 +86,8 @@ class EmployeeController extends Controller
 
         $employeeService->setEmployee($employee)->delete();
 
-        Toast::title("Employee $employee->employee_number deleted successfully")->autoDismiss(3);
+        Toast::title("Employee $employee->employee_number deleted.")->autoDismiss(3);
 
-        return redirect()->route('employees.index');
+        return Redirect::route('employees.index');
     }
 }

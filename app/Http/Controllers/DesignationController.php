@@ -35,7 +35,7 @@ class DesignationController extends Controller
 
         $designationService->setValidated($request->validated())->create();
 
-        Toast::title("Designation created successfully")->autoDismiss(3);
+        Toast::title("Designation created.")->autoDismiss(3);
 
         return redirect()->route('designations.index');
     }
@@ -64,7 +64,7 @@ class DesignationController extends Controller
 
         $designationService->setValidated($request->validated())->setDesignation($designation)->update();
 
-        Toast::title("Designation updated successfully")->autoDismiss(3);
+        Toast::title("Designation updated.")->autoDismiss(3);
 
         return redirect()->route('designations.index');
     }
@@ -75,7 +75,7 @@ class DesignationController extends Controller
 
         $designationService->setDesignation($designation)->delete();
 
-        Toast::title("Designation deleted successfully")->autoDismiss(3);
+        Toast::title("Designation deleted.")->autoDismiss(3);
 
         return redirect()->route('designations.index');
     }

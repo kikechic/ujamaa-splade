@@ -39,7 +39,7 @@ class ApprovalRequestsTable extends AbstractTable
         return ApprovalRequest::query()
             ->where('approver_id', auth()->id())
             ->where('status', 'pending')
-            ->with('documentable');
+            ->with('timesheet');
     }
 
     /**
@@ -51,14 +51,13 @@ class ApprovalRequestsTable extends AbstractTable
     public function configure(SpladeTable $table)
     {
         $table
-            ->withGlobalSearch(columns: ['id'])
-            ->column(
-                key: 'documentable_code',
-                label: __('Document Type'),
-                as: fn ($item, $row) => str()->upper($item),
+            ->withGlobalSearch(
+                columns: [
+                    'id'
+                ]
             )
             ->column(
-                key: 'documentable_id',
+                key: 'timesheet_id',
                 label: __('Document Number'),
             )
             ->paginate(100);

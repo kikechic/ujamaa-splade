@@ -18,6 +18,7 @@ use App\Http\Requests\StoreTimesheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
 use App\Http\Requests\ApproveTimesheetRequest;
 use App\Http\Requests\StoreTimesheetEntryRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class TimesheetController extends Controller
 {
@@ -45,7 +46,7 @@ class TimesheetController extends Controller
 
     public function entryStore(StoreTimesheetEntryRequest $request)
     {
-        return redirect()->route('timesheets.create', [
+        return Redirect::route('timesheets.create', [
             'period' => $request->validated('timesheet_period_id'),
         ]);
     }
@@ -56,9 +57,9 @@ class TimesheetController extends Controller
 
         $timesheet = $timesheetService->setValidated($request->validated())->create();
 
-        Toast::title("Timesheet $timesheet->timesheet_number created successfully")->autoDismiss(3);
+        Toast::title("Timesheet $timesheet->timesheet_number created.")->autoDismiss(3);
 
-        return redirect()->route('timesheets.index');
+        return Redirect::route('timesheets.index');
     }
 
     public function create()
@@ -132,9 +133,9 @@ class TimesheetController extends Controller
 
         $timesheetService->setDocument($timesheet)->setValidated($request->validated())->update();
 
-        Toast::title("Timesheet $timesheet->timesheet_number updated successfully")->autoDismiss(3);
+        Toast::title("Timesheet $timesheet->timesheet_number updated.")->autoDismiss(3);
 
-        return redirect()->route('timesheets.index');
+        return Redirect::route('timesheets.index');
     }
 
     public function destroy(Timesheet $timesheet)
@@ -142,7 +143,7 @@ class TimesheetController extends Controller
         abort_unless(Gate::allows('timesheets_delete'), Response::HTTP_FORBIDDEN, 'You are not authorised to delete timesheets');
 
         return DB::transaction(function () use ($timesheet) {
-            return redirect()->route('timesheets.index');
+            return Redirect::route('timesheets.index');
         });
     }
 
@@ -175,7 +176,7 @@ class TimesheetController extends Controller
     {
         $timesheetService->setDocument($timesheet)->postTimesheet();
 
-        Toast::title("Timesheet $timesheet->timesheet_number posted successfully")->autoDismiss(3);
+        Toast::title("Timesheet $timesheet->timesheet_number posted.")->autoDismiss(3);
 
         session()->flash('print_timesheet', route('documents.print', [
             'document_id' => $timesheet->id,
@@ -189,7 +190,7 @@ class TimesheetController extends Controller
     {
         $timesheetService->setDocument($timesheet)->postTimesheet();
 
-        Toast::title("Timesheet $timesheet->timesheet_number posted successfully")->autoDismiss(3);
+        Toast::title("Timesheet $timesheet->timesheet_number posted.")->autoDismiss(3);
 
         return back();
     }
@@ -233,6 +234,6 @@ class TimesheetController extends Controller
     {
         $timesheetService->setTimesheet($timesheet)->setValidated($request->validated())->approveTimesheet();
 
-        return redirect()->back();
+        return Redirect::back();
     }
 }

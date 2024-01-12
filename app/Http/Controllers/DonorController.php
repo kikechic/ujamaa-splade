@@ -35,7 +35,7 @@ class DonorController extends Controller
 
         $donorService->setValidated($request->validated())->create();
 
-        Toast::title("Donor created successfully")->autoDismiss(3);
+        Toast::title("Donor created.")->autoDismiss(3);
 
         return redirect()->route('donors.index');
     }
@@ -64,7 +64,7 @@ class DonorController extends Controller
 
         $donorService->setValidated($request->validated())->setDonor($donor)->update();
 
-        Toast::title("Donor updated successfully")->autoDismiss(3);
+        Toast::title("Donor updated.")->autoDismiss(3);
 
         return redirect()->route('donors.index');
     }
@@ -75,7 +75,7 @@ class DonorController extends Controller
 
         $donorService->setDonor($donor)->delete();
 
-        Toast::title("Donor deleted successfully")->autoDismiss(3);
+        Toast::title("Donor deleted.")->autoDismiss(3);
 
         return redirect()->route('donors.index');
     }

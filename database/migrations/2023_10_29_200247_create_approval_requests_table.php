@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Company;
+use App\Models\Timesheet;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,9 +16,7 @@ return new class extends Migration
     {
         Schema::create('approval_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('documentable_id');
-            $table->string('documentable_code');
-            $table->string('documentable_type');
+            $table->foreignIdFor(Timesheet::class);
             $table->string('status');
             $table->foreignIdFor(User::class, 'requester_id');
             $table->foreignIdFor(User::class, 'approver_id');

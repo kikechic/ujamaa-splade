@@ -40,7 +40,7 @@ class TimesheetPeriodController extends Controller
 
         $timesheetPeriod = $timesheetPeriodService->setValidated($request->validated())->create();
 
-        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year created successfully")->autoDismiss(3);
+        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year created.")->autoDismiss(3);
 
         return redirect()->route('timesheetPeriods.index');
     }
@@ -71,7 +71,7 @@ class TimesheetPeriodController extends Controller
 
         $timesheetPeriodService->setTimesheetPeriod($timesheetPeriod)->setValidated($request->validated())->update();
 
-        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year updated successfully")->autoDismiss(3);
+        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year updated.")->autoDismiss(3);
 
         return redirect()->route('timesheetPeriods.index');
     }
@@ -82,7 +82,7 @@ class TimesheetPeriodController extends Controller
 
         $timesheetPeriodService->setTimesheetPeriod($timesheetPeriod)->delete();
 
-        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year deleted successfully")->autoDismiss(3);
+        Toast::title("Timesheet period {$timesheetPeriod->period_month?->name} $timesheetPeriod->period_year deleted.")->autoDismiss(3);
 
         return redirect()->route('timesheetPeriods.index');
     }

@@ -19,6 +19,9 @@ module.exports = {
                 serif: ["Garamond", ...defaultTheme.fontFamily.serif],
                 mono: ["ui-monospace", ...defaultTheme.fontFamily.mono],
             },
+            fontSize: {
+                sm: "13px",
+            },
             colors: {
                 blueGray: colors.slate,
                 primary: {

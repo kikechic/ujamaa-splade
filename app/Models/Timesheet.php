@@ -72,6 +72,11 @@ class Timesheet extends Model
         return $this->hasOne(TimesheetApproval::class)->withDefault();
     }
 
+    public function approvalRequest(): HasOne
+    {
+        return $this->hasOne(ApprovalRequest::class)->withDefault();
+    }
+
     public function isOpen(): bool
     {
         return $this->status->value === TimesheetStatusEnum::open();

@@ -22,8 +22,7 @@ class StoreApprovalRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'documentable_id' => 'required',
-            'documentable_code' => 'required',
+            // 'timesheet_id' => 'required',
         ];
     }
 }

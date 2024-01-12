@@ -41,7 +41,7 @@ class CompanyController extends Controller
 
         $companyService->setValidated($request->validated())->create();
 
-        Toast::title('Company created successfully')->autoDismiss(3);
+        Toast::title('Company created.')->autoDismiss(3);
 
         return redirect()->route('companies.index');
     }
@@ -77,7 +77,7 @@ class CompanyController extends Controller
 
         $companyService->setValidated($request->validated())->setCompany($company)->update();
 
-        Toast::title('Company updated successfully')->autoDismiss(3);
+        Toast::title('Company updated.')->autoDismiss(3);
 
         return redirect()->route('companies.index');
     }
@@ -88,7 +88,7 @@ class CompanyController extends Controller
 
         $companyService->setCompany($company)->delete();
 
-        Toast::title('Company deleted successfully')->autoDismiss(3);
+        Toast::title('Company deleted.')->autoDismiss(3);
 
         return redirect()->route('companies.index');
     }

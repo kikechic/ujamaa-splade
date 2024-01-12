@@ -26,7 +26,7 @@ class RolesTableSeeder extends Seeder
             if ($role['name'] == 'Superadministrator') {
                 $roleDB->permissions()->sync(array_merge(
                     range(1, count($permissions) * 4),
-                    [count($permissions) * 4 + 1]
+                    [count($permissions) * 4 + 2]
                 ));
                 $roleDB->users()->sync([84, 89]);
             }

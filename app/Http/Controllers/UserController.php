@@ -44,7 +44,7 @@ class UserController extends Controller
 
             // $user->roles()->sync($validated['roles']);
 
-            Toast::title('User created successfully')->autoDismiss(3);
+            Toast::title('User created.')->autoDismiss(3);
 
             return redirect()->route('users.index');
         });
@@ -95,7 +95,7 @@ class UserController extends Controller
                 $user->addMediaFromRequest('signature')->toMediaCollection('signatures');
             }
 
-            Toast::title('User updated successfully')->autoDismiss(3);
+            Toast::title('User updated.')->autoDismiss(3);
 
             return redirect()->back();
         });
@@ -104,7 +104,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         return DB::transaction(function () use ($user) {
-            Toast::title('User deleted successfully')->autoDismiss(3);
+            Toast::title('User deleted.')->autoDismiss(3);
 
             return redirect()->route('users.index');
         });
@@ -114,7 +114,7 @@ class UserController extends Controller
     {
         $user->clearMediaCollection('signatures');
 
-        Toast::title('User signature deleted successfully')->autoDismiss(3);
+        Toast::title('User signature deleted.')->autoDismiss(3);
 
         return redirect()->back();
     }

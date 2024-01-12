@@ -9,12 +9,13 @@ use ProtoneMedia\Splade\Facades\Toast;
 use App\Services\ApprovalRequestService;
 use App\Http\Requests\StoreApprovalRequestRequest;
 use App\Http\Requests\UpdateApprovalRequestRequest;
+use App\Models\Timesheet;
+use Illuminate\Support\Facades\Redirect;
 
 class ApprovalRequestController extends Controller
 {
     public function index()
     {
-        //
         return view('approval-requests.index', [
             'approvalRequests' => ApprovalRequestsTable::class,
         ]);
@@ -25,7 +26,7 @@ class ApprovalRequestController extends Controller
         //
     }
 
-    public function store(StoreApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService)
+    public function store(StoreApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService, Timesheet $timesheet)
     {
         // Check if approver has been set and allow request only if approver is set.
         $approval = auth()->user()->approval;
@@ -40,9 +41,9 @@ class ApprovalRequestController extends Controller
             return back();
         }
 
-        $approvalRequestService->setValidated($request->validated())->create();
+        $approvalRequestService->setTimesheet($timesheet)->create();
 
-        Toast::title("Approval request sent successfully")->autoDismiss(3);
+        Toast::title("Approval request sent.")->autoDismiss(3);
 
         return back();
     }
@@ -57,14 +58,13 @@ class ApprovalRequestController extends Controller
         //
     }
 
-    public function update(UpdateApprovalRequestRequest $request, ApprovalRequest $approvalRequest, ApprovalRequestService $approvalRequestService)
+    public function update(UpdateApprovalRequestRequest $request, ApprovalRequest $approvalRequest, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
     {
-        //
-        $approvalRequestService->setApprovalRequest($approvalRequest)->setValidated($request->validated())->update();
+        $approvalRequestService->setApprovalRequest($approvalRequest)->setTimesheet($timesheet)->update();
 
-        Toast::title("Request approved successfully")->autoDismiss(3);
+        Toast::title("Request approved.")->autoDismiss(3);
 
-        return redirect()->back();
+        return Redirect::back();
     }
 
     public function destroy(ApprovalRequest $approvalRequest)
@@ -72,23 +72,22 @@ class ApprovalRequestController extends Controller
         //
     }
 
-    public function approve(UpdateApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService)
+    public function approve(UpdateApprovalRequestRequest $request, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
     {
         //
-        $approvalRequestService->setValidated($request->validated())->approve();
+        $approvalRequestService->setTimesheet($timesheet)->approve();
 
-        Toast::title("Request approved successfully")->autoDismiss(3);
+        Toast::title("Request approved.")->autoDismiss(3);
 
-        return redirect()->back();
+        return Redirect::back();
     }
 
-    public function reject(UpdateApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService)
+    public function reject(UpdateApprovalRequestRequest $request, ApprovalRequest $approvalRequest, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
     {
-        //
-        $approvalRequestService->setValidated($request->validated())->reject();
+        $approvalRequestService->setApprovalRequest($approvalRequest)->setTimesheet($timesheet)->reject();
 
-        Toast::title("Request rejected successfully")->autoDismiss(3);
+        Toast::title("Request rejected.")->autoDismiss(3);
 
-        return redirect()->back();
+        return Redirect::back();
     }
 }

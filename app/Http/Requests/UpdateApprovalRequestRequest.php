@@ -22,8 +22,8 @@ class UpdateApprovalRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'documentable_id' => 'required',
-            'documentable_code' => 'required',
+            // 'documentable_id' => 'required',
+            // 'documentable_code' => 'required',
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\Traits\Scopes\CompanyScopeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApprovalRequest extends Model
 {
@@ -21,16 +22,14 @@ class ApprovalRequest extends Model
         SoftDeletes;
 
     protected $fillable = [
-        'documentable_id',
-        'documentable_code',
-        'documentable_type',
+        'timesheet_id',
         'requester_id',
         'approver_id',
         'status',
     ];
 
-    public function documentable(): MorphTo
+    public function timesheet(): BelongsTo
     {
-        return $this->morphTo();
+        return $this->belongsTo(Timesheet::class)->withDefault();
     }
 }

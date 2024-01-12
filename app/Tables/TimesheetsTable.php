@@ -8,6 +8,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\TimesheetPeriod;
 use App\Enums\TimesheetStatusEnum;
+use Illuminate\Support\Facades\Gate;
 use ProtoneMedia\Splade\SpladeTable;
 use ProtoneMedia\Splade\AbstractTable;
 
@@ -41,7 +42,7 @@ class TimesheetsTable extends AbstractTable
     public function for()
     {
         return Timesheet::query()
-            ->when(!auth()->user()->can('access_all_timesheets'), function ($q) {
+            ->when(Gate::denies('access_all_timesheets'), function ($q) {
                 $q->where('user_id', auth()->id());
             })
             ->with([

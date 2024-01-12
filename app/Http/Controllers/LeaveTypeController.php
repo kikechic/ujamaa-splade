@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use ProtoneMedia\Splade\Facades\Toast;
 use App\Http\Requests\StoreLeaveTypeRequest;
 use App\Http\Requests\UpdateLeaveTypeRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class LeaveTypeController extends Controller
 {
@@ -35,9 +36,9 @@ class LeaveTypeController extends Controller
 
         $leaveTypeService->setValidated($request->validated())->create();
 
-        Toast::title("Leave type created successfully")->autoDismiss(3);
+        Toast::title("Leave type created.")->autoDismiss(3);
 
-        return redirect()->route('leaveTypes.index');
+        return Redirect::route('leaveTypes.index');
     }
 
     public function show(LeaveType $leaveType)
@@ -64,9 +65,9 @@ class LeaveTypeController extends Controller
 
         $leaveTypeService->setValidated($request->validated())->setLeaveType($leaveType)->update();
 
-        Toast::title("Leave type updated successfully")->autoDismiss(3);
+        Toast::title("Leave type updated.")->autoDismiss(3);
 
-        return redirect()->route('leaveTypes.index');
+        return Redirect::route('leaveTypes.index');
     }
 
     public function destroy(LeaveType $leaveType, LeaveTypeService $leaveTypeService)
@@ -75,8 +76,8 @@ class LeaveTypeController extends Controller
 
         $leaveTypeService->setLeaveType($leaveType)->delete();
 
-        Toast::title("Leave type deleted successfully")->autoDismiss(3);
+        Toast::title("Leave type deleted.")->autoDismiss(3);
 
-        return redirect()->route('leaveTypes.index');
+        return Redirect::route('leaveTypes.index');
     }
 }
