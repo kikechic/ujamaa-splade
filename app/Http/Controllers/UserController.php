@@ -8,6 +8,7 @@ use App\Tables\UsersTable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use ProtoneMedia\Splade\Facades\Toast;
 use ProtoneMedia\Splade\FileUploads\ExistingFile;
 
@@ -32,6 +33,7 @@ class UserController extends Controller
         $validated = request()->validate([
             'name' => 'required|max:255',
             'email' => 'required|unique:users,email,NULL,id',
+            'password' => 'required|min:8|confirmed',
             //'roles' => 'required'
         ]);
 
@@ -40,6 +42,7 @@ class UserController extends Controller
             $user = new User();
             $user->name = $validated['name'];
             $user->email = $validated['email'];
+            $user->password = Hash::make($validated['password']);
             $user->save();
 
             // $user->roles()->sync($validated['roles']);
