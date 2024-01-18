@@ -83,7 +83,6 @@ class TimesheetsTable extends AbstractTable
             )
             ->column(
                 key: 'employee',
-                searchable: true,
                 sortable: true,
                 canBeHidden: false
             )
@@ -103,15 +102,14 @@ class TimesheetsTable extends AbstractTable
             )
             ->column(
                 key: 'office.name',
-                label: 'office',
+                label: __('Office'),
                 searchable: true,
                 sortable: true,
                 canBeHidden: false
             )
             ->column(
                 key: 'timesheetPeriod',
-                label: 'Period',
-                searchable: true,
+                label: __('Timesheet Period'),
                 sortable: true,
                 canBeHidden: false
             )
@@ -159,12 +157,20 @@ class TimesheetsTable extends AbstractTable
             ->selectFilter(
                 key: 'department.id',
                 label: __('Department'),
-                options: Department::query()->get()->pluck('display_name', 'id')->toArray(),
+                options: Department::query()->get()->pluck('name', 'id')->toArray(),
             )
             ->selectFilter(
                 key: 'status',
                 label: __('Status'),
                 options: TimesheetStatusEnum::statuses(),
+            )
+            ->searchInput(
+                key: 'employee.first_name',
+                label: __('First Name'),
+            )
+            ->searchInput(
+                key: 'employee.last_name',
+                label: __('Last Name'),
             )
             ->paginate(100);
     }
