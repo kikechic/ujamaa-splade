@@ -5,10 +5,7 @@
 				{{ __('Request To Approve') }}
 			</h6>
 			<div class="mt-8 text-2xl">
-				<x-splade-link
-					class="w-full font-semibold text-blue-600 hover:underline"
-					:href="route('approvalRequests.index')"
-				>
+				<x-splade-link class="w-full font-semibold text-blue-600 hover:underline" :href="route('approvalRequests.index')">
 					{{ $requestsToApprove }}
 				</x-splade-link>
 			</div>
@@ -18,11 +15,7 @@
 				{{ __('Notifications') }}
 			</h6>
 			<div class="mt-8 text-2xl">
-				<x-splade-link
-					class="font-semibold text-slate-700 hover:underline"
-					modal
-					:href="route('notifications.index')"
-				>
+				<x-splade-link class="font-semibold text-slate-700 hover:underline" modal :href="route('notifications.index')">
 					{{ $unreadNotifications }}
 				</x-splade-link>
 			</div>

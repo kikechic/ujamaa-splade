@@ -7,7 +7,7 @@
 				</x-splade-link>
 			</div>
 			<div class="inline-flex">
-				<div class="inline-flex w-48 items-center hidden px-2">
+				<div class="w-48 items-center hidden px-2">
 					<x-splade-state>
 						<x-splade-form method="PUT" :action="route('companies.switch')" :default="['new_company' => auth()->user()->current_company_id]" submit-on-change="new_company">
 							<x-splade-select name="new_company" v-model="form.new_company">
