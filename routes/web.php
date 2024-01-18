@@ -1,9 +1,7 @@
 <?php
 
-use App\Actions\ReopenApprovedTimesheetAction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\RoleController;
@@ -22,12 +20,6 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ApprovalRequestController;
 use App\Http\Controllers\ReopenApprovedTimesheetController;
 use App\Http\Controllers\TimesheetPeriodController;
-
-// Route::get('ssh', function () {
-//     // Artisan::call('storage:link');
-//     // Artisan::call('migrate --seed');
-//     Artisan::call('optimize:clear');
-// });
 
 Route::middleware(['splade'])->group(function () {
     Route::middleware('auth')->group(function () {
@@ -87,7 +79,7 @@ Route::middleware(['splade'])->group(function () {
         Route::put('approval-requests/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
         Route::get('approval-requests', [ApprovalRequestController::class, 'index'])->name('approvalRequests.index');
         Route::post('approval-requests/{timesheet}/store', [ApprovalRequestController::class, 'store'])->name('approvalRequests.store');
-        Route::put('approval-requests/{timesheet}/update', [ApprovalRequestController::class, 'update'])->name('approvalRequests.update');
+        Route::put('approval-requests/{approvalRequest}/timesheets/{timesheet}/update', [ApprovalRequestController::class, 'update'])->name('approvalRequests.update');
 
         Route::prefix('notifications')->group(function () {
             Route::post('/mark-as-read', [NotificationController::class, 'markNotification'])->name('markNotification');

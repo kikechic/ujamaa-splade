@@ -48,13 +48,17 @@ class ApprovalRequestService
     public function update(): void
     {
         DB::transaction(function () {
+            // ApprovalRequest::query()
+            // ->where('timesheet_id', $this->timeheet)
             $this->approvalRequest->update([
                 'status' => 'approved',
             ]);
 
-            Timesheet::query()->where('id', $this->approvalRequest->timesheet_id)->update([
-                'status' => TimesheetStatusEnum::approved(),
-            ]);
+            Timesheet::query()
+                ->where('id', $this->approvalRequest->timesheet_id)
+                ->update([
+                    'status' => TimesheetStatusEnum::Approved->value,
+                ]);
         });
     }
 
@@ -93,7 +97,7 @@ class ApprovalRequestService
             Timesheet::query()
                 ->where('id', $this->timesheet->id)
                 ->update([
-                    'status' => TimesheetStatusEnum::open(),
+                    'status' => TimesheetStatusEnum::Open->value,
                 ]);
         });
     }
