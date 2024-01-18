@@ -1,8 +1,4 @@
-<x-splade-modal
-	name="sidebar-modal"
-	slideover
-	position="left"
->
+
 	<div class="px-2 xl:px-8">
 		<ul class="list-none">
 			<li class="items-center font-bold">
@@ -163,5 +159,3 @@
 			</li>
 		</ul>
 	</div>
-
-</x-splade-modal>
