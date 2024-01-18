@@ -26,11 +26,13 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($this, function (FusionException $e, Request $request) {
-            Toast::warning($e->getMessage())->autoDismiss(5);
-            return Redirect::back()->withErrors([
-                'success' => false
-            ]);
+        $this->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($this, function (Throwable $e, Request $request) {
+            if ($e instanceof FusionException) {
+                Toast::warning($e->getMessage())->autoDismiss(5);
+                return Redirect::back()->withErrors([
+                    'success' => false
+                ]);
+            }
         }));
 
         $this->reportable(function (Throwable $e) {
