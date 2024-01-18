@@ -330,8 +330,7 @@
 			@forelse ($leaveTypes as $leaveType)
 			<span style="margin-right: 10px">
 				<span>{{ ++$loop->index }}. </span>
-				{{ $leaveType->code }} -
-				{{ $leaveType->name }}
+				{{ $leaveType->code }} - {{ $leaveType->name }}
 			</span>
 			@empty
 			@endforelse

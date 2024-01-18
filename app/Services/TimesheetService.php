@@ -148,18 +148,20 @@ class TimesheetService
 
     public function prepareEntry(): void
     {
-        $employee = Employee::query()->where('id', auth()->user()->approval->employee_id)->first();
-
-        if (!$employee) {
-            throw new FusionException(
-                code: Response::HTTP_FORBIDDEN,
-                message: "An employee has not been assigned to your user account."
-            );
-        }
-
         if (!$this->updating) {
+            $employee = Employee::query()->where('id', auth()->user()->approval->employee_id)->first();
+            if (!$employee) {
+                throw new FusionException(
+                    code: Response::HTTP_FORBIDDEN,
+                    message: "An employee has not been assigned to your user account."
+                );
+            }
             $this->entry['timesheet_number'] = $this->documentNumber;
             $this->entry['status'] = TimesheetStatusEnum::open();
+        } else {
+            $this->timesheet->load('employee');
+
+            $employee = $this->timesheet->employee;
         }
 
         $this->entry['timesheet_period_id'] = $this->validated['timesheet_period_id'];
@@ -178,8 +180,19 @@ class TimesheetService
                     'donor_id' => $this->validated['donor_ids'][$key],
                 ];
 
+                $donorEntriesFilter = [];
+
                 foreach ($donorHours as $dayKey => $hour) {
                     $this->entries[$key]['day_' . ($dayKey + 1)] = $hour;
+                    if ($hour) {
+                        $donorEntriesFilter[] = true;
+                    } else {
+                        $donorEntriesFilter[] = false;
+                    }
+                }
+
+                if (count(array_unique($donorEntriesFilter)) === 1 && reset($donorEntriesFilter) === false) {
+                    unset($this->entries[$key]);
                 }
             }
         }
@@ -187,10 +200,8 @@ class TimesheetService
 
     public function storeEntries(): void
     {
-        $chunks = array_chunk($this->entries, 100);
-
-        foreach ($chunks as $chunk) {
-            $this->timesheet->timesheetEntries()->createMany($chunk);
+        foreach ($this->entries as $entry) {
+            $this->timesheet->timesheetEntries()->create($entry);
         }
     }
 
