@@ -87,7 +87,7 @@ Route::middleware(['splade'])->group(function () {
         Route::put('approval-requests/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
         Route::resource('approval-requests', ApprovalRequestController::class, [
             'parameters' => [
-                'approval-requests' => 'approvalRequest'
+                'approval-requests' => 'timesheet'
             ]
         ])->names('approvalRequests');
 

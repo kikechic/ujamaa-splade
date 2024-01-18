@@ -48,26 +48,26 @@ class ApprovalRequestController extends Controller
         return back();
     }
 
-    public function show(ApprovalRequest $approvalRequest)
+    public function show(Timesheet $timesheet)
     {
         //
     }
 
-    public function edit(ApprovalRequest $approvalRequest)
+    public function edit(Timesheet $timesheet)
     {
         //
     }
 
-    public function update(UpdateApprovalRequestRequest $request, ApprovalRequest $approvalRequest, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
+    public function update(UpdateApprovalRequestRequest $request, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
     {
-        $approvalRequestService->setApprovalRequest($approvalRequest)->setTimesheet($timesheet)->update();
+        $approvalRequestService->setTimesheet($timesheet)->update();
 
         Toast::title("Request approved.")->autoDismiss(3);
 
         return Redirect::back();
     }
 
-    public function destroy(ApprovalRequest $approvalRequest)
+    public function destroy(Timesheet $timesheet)
     {
         //
     }
@@ -82,9 +82,9 @@ class ApprovalRequestController extends Controller
         return Redirect::back();
     }
 
-    public function reject(UpdateApprovalRequestRequest $request, ApprovalRequest $approvalRequest, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
+    public function reject(UpdateApprovalRequestRequest $request, Timesheet $timesheet, ApprovalRequestService $approvalRequestService)
     {
-        $approvalRequestService->setApprovalRequest($approvalRequest)->setTimesheet($timesheet)->reject();
+        $approvalRequestService->setTimesheet($timesheet)->reject();
 
         Toast::title("Request rejected.")->autoDismiss(3);
 
