@@ -68,6 +68,10 @@ class TimesheetsTable extends AbstractTable
             ->withGlobalSearch(
                 columns: [
                     'timesheet_number',
+                    'employee.employee_number',
+                    'employee.first_name',
+                    'employee.last_name',
+                    'employee.middle_name',
                 ]
             )
             ->column(
