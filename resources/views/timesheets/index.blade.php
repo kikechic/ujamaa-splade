@@ -82,6 +82,10 @@
 						</x-splade-link>
 						@endunless
 						@endcan
+						<x-splade-link class="index-actions text-sky-500" :href="route('timesheets.print', $item)" v-close-popper>
+							<x-lucide-unlock class="w-4 h-4" />
+							{{__('Print PDF')}}
+						</x-splade-link>
 					</x-splade-rehydrate>
 				</x-index-actions-dropdown>
 			</x-splade-cell>
