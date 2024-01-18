@@ -51,13 +51,13 @@
 					<x-splade-rehydrate on="timesheet-status-updated-{{ $item->id }}">
 						@can('reopen_approved_timesheets')
 						@if($item->isApproved())
-						<x-splade-link class="index-actions text-sky-500" method="POST" confirm :href="route('timesheets.approved.reopen', $item)" v-close-popper>
+						<x-splade-link class="index-actions text-sky-500" method="POST" confirm confirm-text="Are you sure you want to reopen this timesheet?" :href="route('timesheets.approved.reopen', $item)" v-close-popper>
 							<x-lucide-unlock class="w-4 h-4" />
 							{{__('Reopen')}}
 						</x-splade-link>
 						@endif
 						@endcan
-						@can('timesheets_update')
+						@can('timesheets_approve')
 						@unless ($item->isPosted() || $item->isApproved() || $item->isRejected())
 						<x-splade-link class="text-green-500 index-actions" modal :href="route('timesheets.approve', $item)" v-close-popper="true">
 							<x-lucide-check class="w-4 h-4" />
@@ -75,7 +75,8 @@
 						@endcan
 						@can('timesheets_delete')
 						@unless ($item->isPosted() || $item->isApproved() || $item->isPending())
-						<x-splade-link class="text-red-500 index-actions" confirm method="delete" confirm-text="This action cannot be reversed!" confirm-button="Yes, delete!" cancel-button="No, cancel" :href="route('timesheets.destroy', $item)" v-close-popper="true">
+						<x-splade-link class="text-red-500 index-actions" confirm-danger="Delete timesheet #{{$item->timesheet_number }}" method="delete" confirm-text="Delete timesheet for {{ $item->timesheetPeriod->period_month?->name }},
+				{{ $item->timesheetPeriod->period_year }} belonging to {{ $item->employee->first_name }} {{ $item->employee->last_name }}? This action cannot be reversed!" confirm-button="Yes, delete!" cancel-button="No, cancel" :href="route('timesheets.destroy', $item)" v-close-popper="true">
 							<x-lucide-x class="w-4 h-4" />
 							{{ __('Delete') }}
 						</x-splade-link>

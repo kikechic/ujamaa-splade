@@ -6,7 +6,6 @@ use App\Enums\TimesheetStatusEnum;
 use App\Exceptions\FusionException;
 use App\Models\ApprovalRequest;
 use App\Models\Timesheet;
-use App\Models\TimesheetApproval;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -20,37 +19,33 @@ final class StoreApprovalRequestAction
         $this->timesheet = $timesheet;
         $this->validated = $validated;
 
-        $loggedInUser = auth()->user();
+        $this->timesheet->load('user');
 
-        $approval = $loggedInUser->approval;
+        $userWhoCreatedTimesheet = $this->timesheet->user;
+
+        $approval = $userWhoCreatedTimesheet->approval;
 
         // if (!$approval->approval_user_id || !$approval->approver_id) {
         //     throw new FusionException(
         //         code: Response::HTTP_UNAUTHORIZED,
-        //         message: "No approval workflow set for {$loggedInUser->name}"
+        //         message: "No approval workflow set for {$userWhoCreatedTimesheet->name}"
         //     );
         // }
 
-        DB::transaction(function () use ($loggedInUser) {
+        DB::transaction(function () use ($userWhoCreatedTimesheet) {
 
-            $approverId = $loggedInUser->approval->approver_id ?? 1;
+            $approverId = $userWhoCreatedTimesheet->approval->approver_id ?? 89;
 
             ApprovalRequest::query()->create([
                 'timesheet_id' => $this->timesheet->id,
                 'status' => 'pending',
-                'requester_id' => $loggedInUser->id,
+                'requester_id' => $userWhoCreatedTimesheet->id,
                 'approver_id' => $approverId,
             ]);
 
             $this->timesheet->update([
                 'status' => TimesheetStatusEnum::Pending_Approval,
             ]);
-
-            // TimesheetApproval::query()->updateOrCreate([
-            //     'timesheet_id' => $this->timesheet->id,
-            // ], [
-            //     'approval_date' => $this->validated['approval_date'],
-            // ]);
 
             session(['fusion' => ['approval_request_sent' => true]]);
         });

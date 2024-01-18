@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ApprovalRequest\ApproveTimesheetAction;
 use App\Models\Employee;
 use App\Models\Timesheet;
 use Illuminate\Http\Request;
@@ -142,9 +143,9 @@ class TimesheetController extends Controller
     {
         abort_unless(Gate::allows('timesheets_delete'), Response::HTTP_FORBIDDEN, 'You are not authorised to delete timesheets');
 
-        return DB::transaction(function () use ($timesheet) {
-            return Redirect::route('timesheets.index');
-        });
+        Toast::info("Deleting timesheets is not enabled.")->autoDismiss(3);
+
+        return Redirect::route('timesheets.index');
     }
 
     public function missingReportEntry()
@@ -230,9 +231,11 @@ class TimesheetController extends Controller
         ]);
     }
 
-    public function approveTimesheetStore(ApproveTimesheetRequest $request, Timesheet $timesheet, TimesheetService $timesheetService)
+    public function approveTimesheetStore(ApproveTimesheetRequest $request, Timesheet $timesheet, ApproveTimesheetAction $approveTimesheetAction)
     {
-        $timesheetService->setTimesheet($timesheet)->setValidated($request->validated())->approveTimesheet();
+        $status = $approveTimesheetAction->handle(timesheet: $timesheet, validated: $request->validated());
+
+        Toast::title("Timesheet {$status}.")->autoDismiss(3);
 
         return Redirect::back();
     }

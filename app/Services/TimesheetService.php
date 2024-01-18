@@ -11,8 +11,10 @@ use App\Models\TimesheetPeriod;
 use App\Models\DocumentSequence;
 use App\Models\TimesheetApproval;
 use App\Enums\TimesheetStatusEnum;
+use App\Exceptions\FusionException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 
 class TimesheetService
 {
@@ -147,6 +149,13 @@ class TimesheetService
     public function prepareEntry(): void
     {
         $employee = Employee::query()->where('id', auth()->user()->approval->employee_id)->first();
+
+        if (!$employee) {
+            throw new FusionException(
+                code: Response::HTTP_FORBIDDEN,
+                message: "An employee has not been assigned to your user account."
+            );
+        }
 
         if (!$this->updating) {
             $this->entry['timesheet_number'] = $this->documentNumber;

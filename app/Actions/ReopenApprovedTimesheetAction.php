@@ -12,12 +12,12 @@ final class ReopenApprovedTimesheetAction
     {
         DB::transaction(function () use ($timesheet) {
             $timesheet->update([
-                'status' => TimesheetStatusEnum::Open->value,
+                'status' => TimesheetStatusEnum::Open,
             ]);
 
             $timesheet->approvalRequest()->delete();
 
-            $timesheet->timesheetApproval()->delete();
+            // $timesheet->timesheetApproval()->delete();
         });
     }
 }
