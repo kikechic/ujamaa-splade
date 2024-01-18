@@ -33,19 +33,19 @@ class ApprovalRequestController extends Controller
 
         if (!$approval->approval_user_id) {
             Toast::warning("No approval workflow set for " . auth()->user()->name)->autoDismiss(3);
-            return Redirect::route('approvalRequests.index');
+            return Redirect::back();
         }
 
         if (!$approval->approver_id) {
             Toast::warning("An approver for " . auth()->user()->name . " is not specified")->autoDismiss(3);
-            return Redirect::route('approvalRequests.index');
+            return Redirect::back();
         }
 
         $approvalRequestService->setTimesheet($timesheet)->create();
 
         Toast::title("Approval request sent.")->autoDismiss(3);
 
-        return Redirect::route('approvalRequests.index');
+        return Redirect::back();
     }
 
     public function show(Timesheet $timesheet)
@@ -130,7 +130,7 @@ class ApprovalRequestController extends Controller
             return Redirect::route('approvalRequests.index');
         }
 
-        if (auth()->id() == $approval->approver_id) {
+        if ((int) auth()->id() === (int) $approval->approval_user_id) {
             Toast::warning("You cannot approve your own timesheet")->autoDismiss(3);
             return Redirect::route('approvalRequests.index');
         }
