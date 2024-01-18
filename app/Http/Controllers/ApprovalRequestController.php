@@ -28,6 +28,7 @@ class ApprovalRequestController extends Controller
 
     public function store(StoreApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService, Timesheet $timesheet)
     {
+        dd($timesheet->toArray());
         // Check if approver has been set and allow request only if approver is set.
         $approval = auth()->user()->approval;
 

@@ -85,11 +85,9 @@ Route::middleware(['splade'])->group(function () {
 
         Route::put('approval-requests/approve', [ApprovalRequestController::class, 'approve'])->name('approvalRequests.approve');
         Route::put('approval-requests/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
-        Route::resource('approval-requests', ApprovalRequestController::class, [
-            'parameters' => [
-                'approval-requests' => 'timesheet'
-            ]
-        ])->names('approvalRequests');
+        Route::get('approval-requests', [ApprovalRequestController::class, 'index'])->name('approvalRequests.index');
+        Route::post('approval-requests/{timesheet}/store', [ApprovalRequestController::class, 'store'])->name('approvalRequests.store');
+        Route::put('approval-requests/{timesheet}/update', [ApprovalRequestController::class, 'update'])->name('approvalRequests.update');
 
         Route::prefix('notifications')->group(function () {
             Route::post('/mark-as-read', [NotificationController::class, 'markNotification'])->name('markNotification');
