@@ -25,16 +25,16 @@ final class StoreApprovalRequestAction
 
         $approval = $userWhoCreatedTimesheet->approval;
 
-        // if (!$approval->approval_user_id || !$approval->approver_id) {
-        //     throw new FusionException(
-        //         code: Response::HTTP_UNAUTHORIZED,
-        //         message: "No approval workflow set for {$userWhoCreatedTimesheet->name}"
-        //     );
-        // }
+        if (!$approval->approval_user_id || !$approval->approver_id) {
+            throw new FusionException(
+                code: Response::HTTP_UNAUTHORIZED,
+                message: "No approval workflow set for {$userWhoCreatedTimesheet->name}"
+            );
+        }
 
         DB::transaction(function () use ($userWhoCreatedTimesheet) {
 
-            $approverId = $userWhoCreatedTimesheet->approval->approver_id ?? 89;
+            $approverId = $userWhoCreatedTimesheet->approval->approver_id;
 
             ApprovalRequest::query()->create([
                 'timesheet_id' => $this->timesheet->id,
