@@ -75,8 +75,8 @@ Route::middleware(['splade'])->group(function () {
             ]
         ])->names('timesheetPeriods');
 
-        Route::put('approval-requests/approve', [ApprovalRequestController::class, 'approve'])->name('approvalRequests.approve');
-        Route::put('approval-requests/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
+        Route::put('approval-requests/{timesheet}/approve', [ApprovalRequestController::class, 'approve'])->name('approvalRequests.approve');
+        Route::put('approval-requests/{timesheet}/reject', [ApprovalRequestController::class, 'reject'])->name('approvalRequests.reject');
         Route::get('approval-requests', [ApprovalRequestController::class, 'index'])->name('approvalRequests.index');
         Route::post('approval-requests/{timesheet}/store', [ApprovalRequestController::class, 'store'])->name('approvalRequests.store');
         Route::put('approval-requests/{approvalRequest}/timesheets/{timesheet}/update', [ApprovalRequestController::class, 'update'])->name('approvalRequests.update');
