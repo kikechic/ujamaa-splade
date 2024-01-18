@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\ApprovalRequest\StoreApprovalRequestAction;
 use App\Models\Approval;
 use App\Models\ApprovalRequest;
 use App\Tables\ApprovalRequestsTable;
@@ -26,22 +27,9 @@ class ApprovalRequestController extends Controller
         //
     }
 
-    public function store(StoreApprovalRequestRequest $request, ApprovalRequestService $approvalRequestService, Timesheet $timesheet)
+    public function store(StoreApprovalRequestRequest $request, StoreApprovalRequestAction $storeApprovalRequestAction, Timesheet $timesheet)
     {
-        // Check if approver has been set and allow request only if approver is set.
-        $approval = auth()->user()->approval;
-
-        if (!$approval->approval_user_id) {
-            Toast::warning("No approval workflow set for " . auth()->user()->name)->autoDismiss(3);
-            return Redirect::back();
-        }
-
-        if (!$approval->approver_id) {
-            Toast::warning("An approver for " . auth()->user()->name . " is not specified")->autoDismiss(3);
-            return Redirect::back();
-        }
-
-        $approvalRequestService->setTimesheet($timesheet)->create();
+        $storeApprovalRequestAction->handle(timesheet: $timesheet);
 
         Toast::title("Approval request sent.")->autoDismiss(3);
 

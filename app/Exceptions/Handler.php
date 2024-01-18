@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use ProtoneMedia\Splade\Facades\Toast;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,7 +26,12 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($this));
+        $this->renderable(\ProtoneMedia\Splade\SpladeCore::exceptionHandler($this, function (FusionException $e, Request $request) {
+            Toast::warning($e->getMessage())->autoDismiss(5);
+            return Redirect::back()->withErrors([
+                'success' => false
+            ]);
+        }));
 
         $this->reportable(function (Throwable $e) {
             //

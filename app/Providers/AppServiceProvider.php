@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Splade::share('fusion', [
+            'approval_request_sent' => session()->get('approval_request_sent', false),
+        ]);
+
         if (Schema::hasTable('companies')) {
             Splade::share('companies', Company::query()->get());
         }

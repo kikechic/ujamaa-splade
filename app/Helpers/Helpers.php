@@ -22,8 +22,10 @@ class Helpers
             ];
         }
 
+        $imageUrl = str_replace('https', 'http', strtolower($image->getUrl()));
+
         $modified = (new ImageManager)
-            ->make($image->getUrl())
+            ->make($imageUrl)
             ->widen($width, function ($constraint) {
                 $constraint->upsize();
             })
