@@ -2,14 +2,14 @@
     <ul class="list-none">
         <li class="items-center">
             <x-sidebar-link :active="request()->routeIs('home')" :href="route('home')">
-                <x-lucide-layout-dashboard class="w-4 h-4 mr-2" />
+                <x-lucide-laptop-2 class="w-4 h-4 mr-2" />
                 {{ __('Dashboard') }}
             </x-sidebar-link>
         </li>
         @can('users_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('users.*')" :href="route('users.index')">
-                    <x-lucide-users class="w-4 h-4 mr-2" />
+                    <x-lucide-user class="w-4 h-4 mr-2" />
                     {{ __('Users') }}
                 </x-sidebar-link>
             </li>
@@ -17,7 +17,7 @@
         @can('roles_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('roles.*')" :href="route('roles.index')">
-                    <x-lucide-chevron-right class="w-4 h-4 mr-2" />
+                    <x-lucide-settings-2 class="w-4 h-4 mr-2" />
                     {{ __('Roles') }}
                 </x-sidebar-link>
             </li>
@@ -25,6 +25,7 @@
         @can('permissions_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('permissions.*')" :href="route('permissions.index')">
+                    <x-lucide-unlock class="w-4 h-4 mr-2" />
                     {{ __('Permissions') }}
                 </x-sidebar-link>
             </li>
@@ -32,6 +33,7 @@
         @can('companies_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('companies.*')" :href="route('companies.index')">
+                    <x-lucide-building-2 class="w-4 h-4 mr-2" />
                     {{ __('Companies') }}
                 </x-sidebar-link>
             </li>
@@ -39,6 +41,7 @@
         @can('departments_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('departments.*')" :href="route('departments.index')">
+                    <x-lucide-currency class="w-4 h-4 mr-2" />
                     {{ __('Departments') }}
                 </x-sidebar-link>
             </li>
@@ -46,6 +49,7 @@
         @can('designations_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('designations.*')" :href="route('designations.index')">
+                    <x-lucide-bar-chart class="w-4 h-4 mr-2" />
                     {{ __('Designations') }}
                 </x-sidebar-link>
             </li>
@@ -53,6 +57,7 @@
         @can('donors_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('donors.*')" :href="route('donors.index')">
+                    <x-lucide-coins class="w-4 h-4 mr-2" />
                     {{ __('Donors') }}
                 </x-sidebar-link>
             </li>
@@ -68,6 +73,7 @@
         @can('employees_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('employees.*')" :href="route('employees.index')">
+                    <x-lucide-users class="w-4 h-4 mr-2" />
                     {{ __('Employees') }}
                 </x-sidebar-link>
             </li>
@@ -98,22 +104,15 @@
         @endcan
         <li class="items-center">
             <x-sidebar-link :active="request()->routeIs('approvalRequests.*')" :href="route('approvalRequests.index')">
+                <x-lucide-radio-receiver class="w-4 h-4 mr-2" />
                 {{ __('Requests To Approve') }}
             </x-sidebar-link>
         </li>
         <li class="items-center">
             <x-sidebar-link :active="request()->routeIs('approvals.*')" :href="route('approvals.index')">
+                <x-lucide-settings class="w-4 h-4 mr-2" />
                 {{ __('Approvals Setup') }}
             </x-sidebar-link>
         </li>
-        <!--li class="items-center">
-    <x-sidebar-link
-     :active="request()->routeIs('notes')"
-     :href="route('notes')"
-     modal
-    >
-     {{ __('FAQ / Notes') }}
-    </x-sidebar-link>
-   </-li-->
     </ul>
 </div>

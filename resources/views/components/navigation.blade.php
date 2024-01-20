@@ -1,9 +1,11 @@
 <nav class="bg-gray-50 p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
 
-        <x-splade-link :href="route('home')" class="text-primary-500 text-xl font-bold">
-            Timesheets
-        </x-splade-link>
+        <div class="w-10 ">
+            <x-splade-link class="block lg:hidden" href="#sidebar-modal">
+                <x-lucide-menu class="h-6 w-6" />
+            </x-splade-link>
+        </div>
 
         <div class="flex items-center space-x-4">
 
