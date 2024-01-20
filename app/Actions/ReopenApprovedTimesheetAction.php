@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\TimesheetStatusEnum;
+use App\Events\TimesheetReopenedEvent;
 use App\Models\Timesheet;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +19,8 @@ final class ReopenApprovedTimesheetAction
             $timesheet->approvalRequest()->delete();
 
             // $timesheet->timesheetApproval()->delete();
+
+            TimesheetReopenedEvent::dispatch($timesheet);
         });
     }
 }

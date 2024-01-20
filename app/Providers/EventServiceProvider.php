@@ -2,9 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\TimesheetApprovedEvent;
+use App\Events\TimesheetRejectedEvent;
+use App\Events\TimesheetReopenedEvent;
+use App\Events\TimesheetReturnedEvent;
+use App\Listeners\TimesheetApprovedListener;
+use App\Listeners\TimesheetRejectedListener;
+use App\Listeners\TimesheetReopenedListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
-use App\Notifications\NewTimesheetCommentNotification;
+use App\Notifications\TimesheetReturnedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -18,8 +25,19 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            NewTimesheetCommentNotification::class,
         ],
+        TimesheetReturnedEvent::class => [
+            TimesheetReturnedNotification::class,
+        ],
+        TimesheetReopenedEvent::class => [
+            TimesheetReopenedListener::class,
+        ],
+        TimesheetApprovedEvent::class => [
+            TimesheetApprovedListener::class,
+        ],
+        TimesheetRejectedEvent::class => [
+            TimesheetRejectedListener::class,
+        ]
     ];
 
     /**

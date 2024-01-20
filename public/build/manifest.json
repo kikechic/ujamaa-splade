@@ -69,12 +69,12 @@
     "src": "node_modules/flatpickr/dist/esm/index.js"
   },
   "resources/js/app.css": {
-    "file": "assets/app-a8d59721.css",
+    "file": "assets/app-3027d525.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-a8d59721.css"
+      "assets/app-3027d525.css"
     ],
     "dynamicImports": [
       "node_modules/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.esm.js",
@@ -94,12 +94,12 @@
       "resources/js/components/Timesheet.vue",
       "resources/js/components/Dropdown.vue"
     ],
-    "file": "assets/app-eb125ce6.js",
+    "file": "assets/app-71dd7f9d.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/js/components/Dropdown.vue": {
-    "file": "assets/Dropdown-dfeb099b.js",
+    "file": "assets/Dropdown-7a4b2382.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -107,7 +107,7 @@
     "src": "resources/js/components/Dropdown.vue"
   },
   "resources/js/components/Timesheet.vue": {
-    "file": "assets/Timesheet-6755def1.js",
+    "file": "assets/Timesheet-fc8cddc5.js",
     "imports": [
       "__commonjsHelpers-725317a4.js",
       "resources/js/app.js"

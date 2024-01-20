@@ -3,10 +3,14 @@
 namespace App\Actions\ApprovalRequest;
 
 use App\Enums\TimesheetStatusEnum;
+use App\Events\TimesheetApprovedEvent;
+use App\Events\TimesheetRejectedEvent;
+use App\Events\TimesheetReturnedEvent;
 use App\Models\ApprovalRequest;
 use App\Models\Timesheet;
 use App\Models\TimesheetApproval;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 final class ApproveTimesheetAction
 {
@@ -18,58 +22,34 @@ final class ApproveTimesheetAction
         $this->timesheet = $timesheet;
         $this->validated = $validated;
 
-        return DB::transaction(function () {
-            if (data_get($this->validated, 'approve')) {
-                $this->timesheet->update([
-                    'status' => TimesheetStatusEnum::approved()
-                ]);
+        if (data_get($this->validated, 'approve')) {
+            (new StoreApproveTimesheetAction)->handle(
+                timesheet: $this->timesheet,
+                validated: $this->validated
+            );
 
-                $this->timesheet->timesheetApproval()->updateOrCreate([
-                    'approval_date' => $this->validated['approval_date']
-                ]);
+            TimesheetApprovedEvent::dispatch($this->timesheet);
 
-                ApprovalRequest::query()
-                    ->where('timesheet_id', $this->timesheet->id)
-                    ->update([
-                        'status' => 'approved'
-                    ]);
+            return "approved";
+        }
 
-                // TimesheetApproval::query()->updateOrCreate([
-                //     'timesheet_id' => $this->timesheet->id,
-                // ], [
-                //     'approval_date' => $this->validated['approval_date'],
-                // ]);
+        if (data_get($this->validated, 'reject')) {
+            (new StoreRejectTimesheetAction)->handle(timesheet: $this->timesheet);
 
-                return "approved";
-            }
+            TimesheetRejectedEvent::dispatch($this->timesheet);
 
-            if (data_get($this->validated, 'reject')) {
-                $this->timesheet->update([
-                    'status' => TimesheetStatusEnum::rejected()
-                ]);
+            return "rejected";
+        }
 
-                ApprovalRequest::query()
-                    ->where('timesheet_id', $this->timesheet->id)
-                    ->update([
-                        'status' => 'rejected',
-                    ]);
+        if (data_get($this->validated, 'return')) {
+            (new StoreReturnTimesheetAction)->handle(
+                timesheet: $this->timesheet,
+                validated: $this->validated
+            );
 
-                return "rejected";
-            }
+            TimesheetReturnedEvent::dispatch($this->timesheet, $this->validated['comment']);
 
-            if (data_get($this->validated, 'return')) {
-                $this->timesheet->timesheetComments()->create([
-                    'comment' => $this->validated['comment'],
-                ]);
-
-                ApprovalRequest::query()
-                    ->where('timesheet_id', $this->timesheet->id)
-                    ->update([
-                        'status' => 'open'
-                    ]);
-
-                return "returned";
-            }
-        });
+            return "returned";
+        }
     }
 }

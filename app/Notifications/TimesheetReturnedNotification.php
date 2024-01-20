@@ -8,20 +8,12 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewTimesheetCommentNotification extends Notification
+class TimesheetReturnedNotification extends Notification
 {
     use Queueable;
 
-    protected Timesheet $timesheet;
-    protected string $comment;
-
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct(Timesheet $timesheet, string $comment)
+    public function __construct(public Timesheet $timesheet, public string $comment)
     {
-        $this->timesheet = $timesheet;
-        $this->comment = $comment;
     }
 
     /**
@@ -53,8 +45,8 @@ class NewTimesheetCommentNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'timesheet_id' => $this->timesheet->id,
-            'timesheet_number' => $this->timesheet->timesheet_number,
+            'id' => $this->timesheet->id,
+            'number' => $this->timesheet->timesheet_number,
             'comment' => $this->comment,
         ];
     }
