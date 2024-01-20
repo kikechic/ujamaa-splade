@@ -10,7 +10,10 @@ class HomeController extends Controller
     public function __invoke()
     {
         return view('home', [
-            'requestsToApprove' => ApprovalRequest::query()->where('approver_id', auth()->id())->count(),
+            'requestsToApprove' => ApprovalRequest::query()
+                ->where('approver_id', auth()->id())
+                ->where('status', 'open')
+                ->count(),
             'unreadNotifications' => auth()->user()->unreadNotifications->count(),
         ]);
     }
