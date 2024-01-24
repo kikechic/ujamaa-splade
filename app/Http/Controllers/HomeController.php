@@ -12,7 +12,7 @@ class HomeController extends Controller
         return view('home', [
             'requestsToApprove' => ApprovalRequest::query()
                 ->where('approver_id', auth()->id())
-                ->where('status', 'open')
+                ->where('status', 'pending')
                 ->count(),
             'unreadNotifications' => auth()->user()->unreadNotifications->count(),
         ]);
