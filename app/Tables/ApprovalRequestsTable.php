@@ -39,7 +39,10 @@ class ApprovalRequestsTable extends AbstractTable
         return ApprovalRequest::query()
             ->where('approver_id', auth()->id())
             ->where('status', 'pending')
-            ->with('timesheet.employee');
+            ->with(['timesheet' => [
+                'employee'
+            ]
+            ]);
     }
 
     /**
