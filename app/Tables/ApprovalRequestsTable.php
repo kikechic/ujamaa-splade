@@ -64,7 +64,7 @@ class ApprovalRequestsTable extends AbstractTable
                 label: __('Document Number'),
             )
             ->column(
-                key: 'employee.employee_number',
+                key: 'timesheet.employee.employee_number',
                 label: 'Staff ID',
                 sortable: true,
                 canBeHidden: false
