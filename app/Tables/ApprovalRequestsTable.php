@@ -70,7 +70,7 @@ class ApprovalRequestsTable extends AbstractTable
                 canBeHidden: false
             )
             ->column(
-                key: 'employee.full_name',
+                key: 'timesheet.employee.full_name',
                 label: 'Employee Name',
                 sortable: true,
                 canBeHidden: false,
