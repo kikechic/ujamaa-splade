@@ -39,7 +39,7 @@ class ApprovalRequestsTable extends AbstractTable
         return ApprovalRequest::query()
             ->where('approver_id', auth()->id())
             ->where('status', 'pending')
-            ->with('timesheet');
+            ->with('timesheet.employee');
     }
 
     /**
@@ -59,6 +59,18 @@ class ApprovalRequestsTable extends AbstractTable
             ->column(
                 key: 'timesheet_id',
                 label: __('Document Number'),
+            )
+            ->column(
+                key: 'employee.employee_number',
+                label: 'Staff ID',
+                sortable: true,
+                canBeHidden: false
+            )
+            ->column(
+                key: 'employee.full_name',
+                label: 'Employee Name',
+                sortable: true,
+                canBeHidden: false,
             )
             ->paginate(100);
     }
