@@ -25,7 +25,7 @@ class TimesheetController extends Controller
 {
     public function index()
     {
-        dd(auth()->user()->permissions());
+        dd(auth()->user()->permissions, auth()->user()->roles);
         abort_unless(Gate::allows('timesheets_access'), Response::HTTP_FORBIDDEN, 'You are not authorised to access timesheets');
 
         return view('timesheets.index', [
