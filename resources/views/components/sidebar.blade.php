@@ -94,14 +94,12 @@
                 </x-sidebar-link>
             </li>
         @endcan
-        @can('timesheets_access')
             <li class="items-center">
                 <x-sidebar-link :active="request()->routeIs('timesheets.*')" :href="route('timesheets.index')">
                     <x-lucide-calendar-clock class="w-4 h-4 mr-2" />
                     {{ __('Timesheets') }}
                 </x-sidebar-link>
             </li>
-        @endcan
         <li class="items-center">
             <x-sidebar-link :active="request()->routeIs('approvalRequests.*')" :href="route('approvalRequests.index')">
                 <x-lucide-radio-receiver class="w-4 h-4 mr-2" />
