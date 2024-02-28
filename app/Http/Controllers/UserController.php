@@ -43,6 +43,7 @@ class UserController extends Controller
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             $user->password = Hash::make($validated['password']);
+            $user->current_company_id = auth()->user()->current_company_id;
             $user->save();
 
             // $user->roles()->sync($validated['roles']);
