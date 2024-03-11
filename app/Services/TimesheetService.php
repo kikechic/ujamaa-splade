@@ -365,8 +365,6 @@ class TimesheetService
             ->pluck('employee_id')
             ->toArray();
 
-        dd($employeeIds);
-
         $employeesWithTimesheets = Timesheet::query()
             ->where('timesheet_period_id', $this->timesheetPeriod->id)
             ->whereIn('employee_id', $employeeIds)
