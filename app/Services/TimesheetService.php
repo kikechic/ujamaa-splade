@@ -368,7 +368,8 @@ class TimesheetService
         $employeesWithTimesheets = Timesheet::query()
             ->where('timesheet_period_id', $this->timesheetPeriod->id)
             ->whereIn('employee_id', $employeeIds)
-            ->pluck('employee_id');
+            ->pluck('employee_id')
+            ->toArray();
 
         $employeesWithoutTimesheets = array_diff($employeeIds, $employeesWithTimesheets);
 
