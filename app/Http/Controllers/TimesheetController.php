@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\ApprovalRequest\ApproveTimesheetAction;
 use App\Models\Employee;
 use App\Models\Timesheet;
 use Illuminate\Http\Request;
@@ -15,11 +14,12 @@ use Illuminate\Support\Facades\Gate;
 use ProtoneMedia\Splade\Facades\Toast;
 use App\Services\PrintTimesheetService;
 use App\Enums\TimesheetPeriodStatusEnum;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\StoreTimesheetRequest;
 use App\Http\Requests\UpdateTimesheetRequest;
 use App\Http\Requests\ApproveTimesheetRequest;
 use App\Http\Requests\StoreTimesheetEntryRequest;
-use Illuminate\Support\Facades\Redirect;
+use App\Actions\ApprovalRequest\ApproveTimesheetAction;
 
 class TimesheetController extends Controller
 {
@@ -167,6 +167,31 @@ class TimesheetController extends Controller
         ]);
 
         $timesheetService = (new TimesheetService)->setTimesheetPeriod($validated['timesheet_period_id'])->missing();
+
+        return view('timesheets.reports.missing', [
+            'employees' => $timesheetService->getEmployees(),
+        ]);
+    }
+
+    public function missingReportApproverEntry()
+    {
+        $timesheetPeriods = TimesheetPeriod::query()
+            ->orderBy('period_year', 'desc')
+            ->orderBy('period_month', 'desc')
+            ->get()
+            ->keyBy('id')
+            ->map(fn ($timesheetPeriod) => "$timesheetPeriod->period_year ~ $timesheetPeriod->month_name");
+
+        return view('timesheets.reports.missing-entry', compact('timesheetPeriods'));
+    }
+
+    public function missingReportApprover()
+    {
+        $validated = request()->validate([
+            'timesheet_period_id' => 'required',
+        ]);
+
+        $timesheetService = (new TimesheetService)->setTimesheetPeriod($validated['timesheet_period_id'])->missingForApproverReport();
 
         return view('timesheets.reports.missing', [
             'employees' => $timesheetService->getEmployees(),

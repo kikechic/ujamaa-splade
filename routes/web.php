@@ -64,6 +64,8 @@ Route::middleware(['splade'])->group(function () {
             Route::post('/entry', [TimesheetController::class, 'entryStore'])->name('timesheets.entry.store');
             Route::get('/reports/missing/entry', [TimesheetController::class, 'missingReportEntry'])->name('timesheets.reports.missing.entry');
             Route::get('/reports/missing', [TimesheetController::class, 'missingReport'])->name('timesheets.reports.missing');
+            Route::get('/reports/missing-approvers/entry', [TimesheetController::class, 'missingReportApproverEntry'])->name('timesheets.reports.missing.approvers.entry');
+            Route::get('/reports/missing-approvers', [TimesheetController::class, 'missingReportApprover'])->name('timesheets.reports.missing.approvers');
             Route::get('{timesheet}/print', [TimesheetController::class, 'print'])->name('timesheets.print');
             Route::post('{timesheet}/approved/reopen', ReopenApprovedTimesheetController::class)->name('timesheets.approved.reopen');
         });

@@ -7,14 +7,14 @@ use App\Models\Donor;
 use App\Models\Workday;
 use App\Models\Employee;
 use App\Models\Timesheet;
+use Illuminate\Http\Response;
 use App\Models\TimesheetPeriod;
 use App\Models\DocumentSequence;
-use App\Models\TimesheetApproval;
 use App\Enums\TimesheetStatusEnum;
-use App\Exceptions\FusionException;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\FusionException;
+use App\Models\Approval;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Response;
 
 class TimesheetService
 {
@@ -353,6 +353,31 @@ class TimesheetService
         $this->prepareWorkdays();
         $this->prepareDays();
         $this->prepareTotals();
+        return $this;
+    }
+
+    public function missingForApproverReport(): self
+    {
+        $this->prepareStartAndEndDates();
+
+        $employeeIds = Approval::query()
+            ->where('approver_id', auth()->id())
+            ->pluck('employee_id')
+            ->toArray();
+
+        $employeesWithTimesheets = Timesheet::query()
+            ->where('timesheet_period_id', $this->timesheetPeriod->id)
+            ->whereIn('employee_id', $employeeIds)
+            ->pluck('employee_id');
+
+        $employeesWithoutTimesheets = array_diff($employeeIds, $employeesWithTimesheets);
+
+        $this->employees = Employee::query()
+            ->with('department', 'office', 'designation')
+            ->where(fn ($query) => $query->whereNull('inactive_date')->orWhere('inactive_date', '>=', $this->startDate))
+            ->whereIn('id', $employeesWithoutTimesheets)
+            ->get();
+
         return $this;
     }
 

@@ -5,6 +5,7 @@ namespace App\Actions\ApprovalRequest;
 use App\Models\ApprovalRequest;
 use App\Models\Timesheet;
 use Illuminate\Support\Facades\DB;
+use Enums\TimesheetStatusEnum;
 
 final class StoreReturnTimesheetAction
 {
@@ -17,6 +18,10 @@ final class StoreReturnTimesheetAction
         $this->validated = $validated;
 
         DB::transaction(function () {
+            $this->timesheet->update([
+                'status' => TimesheetStatusEnum::Open,
+            ]);
+
             $this->timesheet->timesheetComments()->create([
                 'comment' => $this->validated['comment'],
             ]);
