@@ -7,7 +7,7 @@
 	>
 		<x-splade-form
 			method="GET"
-			action="{{ route('timesheets.reports.missing') }}"
+			action="{{ route('timesheets.reports.missing.approvers') }}"
 			keep-modal
 		>
 			<x-dialog-modal>
