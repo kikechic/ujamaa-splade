@@ -182,7 +182,7 @@ class TimesheetController extends Controller
             ->keyBy('id')
             ->map(fn ($timesheetPeriod) => "$timesheetPeriod->period_year ~ $timesheetPeriod->month_name");
 
-        return view('timesheets.reports.missing-entry', compact('timesheetPeriods'));
+        return view('timesheets.reports-approvers.missing-entry', compact('timesheetPeriods'));
     }
 
     public function missingReportApprover()
@@ -193,7 +193,7 @@ class TimesheetController extends Controller
 
         $timesheetService = (new TimesheetService)->setTimesheetPeriod($validated['timesheet_period_id'])->missingForApproverReport();
 
-        return view('timesheets.reports.missing', [
+        return view('timesheets.reports-approvers.missing', [
             'employees' => $timesheetService->getEmployees(),
         ]);
     }
