@@ -353,6 +353,7 @@ class TimesheetService
         $this->prepareWorkdays();
         $this->prepareDays();
         $this->prepareTotals();
+        
         return $this;
     }
 
