@@ -389,7 +389,15 @@ class TimesheetService
 
         $this->employees =  Employee::query()
             ->with('department', 'office', 'designation')
-            ->where(fn ($query) => $query->whereNull('inactive_date')->orWhere('inactive_date', '>=', $this->startDate))
+            ->where(function ($query) {
+                return $query
+                    ->whereNull('inactive_date')
+                    ->orWhere(function($query) {
+                        $query
+                            ->where('inactive_date', '>=', $this->startDate)
+                            ->where('inactive_date', '<=', $this->endDate);
+                    });
+            })
             ->where('start_date', '<=', $this->endDate)
             ->whereDoesntHave('timesheets', function ($query) {
                 return $query
