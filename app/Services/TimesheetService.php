@@ -391,7 +391,11 @@ class TimesheetService
             ->with('department', 'office', 'designation')
             ->where(fn ($query) => $query->whereNull('inactive_date')->orWhere('inactive_date', '>=', $this->startDate))
             ->where('start_date', '<=', $this->endDate)
-            ->whereDoesntHave('timesheets', fn ($query) => $query->whereIn('timesheets.status', [TimesheetStatusEnum::pending(), TimesheetStatusEnum::approved()]))
+            ->whereDoesntHave('timesheets', function ($query) {
+                return $query
+                    ->whereIn('timesheets.status', [TimesheetStatusEnum::pending(), TimesheetStatusEnum::approved()])
+                    ->whereBelongsTo($this->timesheetPeriod);
+            })
             ->get();
 
         return $this;
