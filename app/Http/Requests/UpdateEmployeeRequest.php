@@ -30,7 +30,7 @@ class UpdateEmployeeRequest extends FormRequest
             'designation_id' => 'nullable',
             'office_id' => 'nullable',
             'start_date' => 'required|date_format:Y-m-d|before_or_equal:inactive_date',
-            'inactive_date' => 'required_if:status,0|date_format:Y-m-d',
+            'inactive_date' => 'nullable|required_if:status,0|date_format:Y-m-d',
             'status' => 'required',
             'email' => 'nullable|email',
         ];
