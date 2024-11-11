@@ -9,6 +9,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PowerJoinClause extends JoinClause
 {
@@ -36,14 +37,8 @@ class PowerJoinClause extends JoinClause
 
     /**
      * Create a new join clause instance.
-     *
-     * @param  \Illuminate\Database\Query\Builder  $parentQuery
-     * @param  string  $type
-     * @param  string  $table
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return void
      */
-    public function __construct(Builder $parentQuery, $type, $table, Model $model = null)
+    public function __construct(Builder $parentQuery, $type, string $table, Model $model = null)
     {
         parent::__construct($parentQuery, $type, $table);
 
@@ -93,6 +88,10 @@ class PowerJoinClause extends JoinClause
         foreach ($this->model->getGlobalScopes() as $scope) {
             if ($scope instanceof Closure) {
                 $scope->call($this, $this);
+                continue;
+            }
+
+            if ($scope instanceof SoftDeletingScope) {
                 continue;
             }
 
@@ -200,7 +199,7 @@ class PowerJoinClause extends JoinClause
      */
     public function withTrashed(): self
     {
-        if (! in_array(SoftDeletes::class, class_uses_recursive($this->getModel()))) {
+        if (! $this->getModel() || ! in_array(SoftDeletes::class, class_uses_recursive($this->getModel()))) {
             return $this;
         }
 
@@ -220,17 +219,26 @@ class PowerJoinClause extends JoinClause
      */
     public function onlyTrashed(): self
     {
-        if (! in_array(SoftDeletes::class, class_uses_recursive($this->getModel()))) {
+        if (! $this->getModel()
+            || ! in_array(SoftDeletes::class, class_uses_recursive($this->getModel()))
+        ) {
             return $this;
         }
 
-        $this->wheres = array_map(function ($where) {
+        $hasCondition = null;
+
+        $this->wheres = array_map(function ($where) use (&$hasCondition) {
             if ($where['type'] === 'Null' && Str::contains($where['column'], $this->getModel()->getDeletedAtColumn())) {
                 $where['type'] = 'NotNull';
+                $hasCondition = true;
             }
 
             return $where;
         }, $this->wheres);
+
+        if (! $hasCondition) {
+            $this->whereNotNull($this->getModel()->getQualifiedDeletedAtColumn());
+        }
 
         return $this;
     }
@@ -239,14 +247,24 @@ class PowerJoinClause extends JoinClause
     {
         $scope = 'scope' . ucfirst($name);
 
+        if (! $this->getModel()) {
+            return;
+        }
+
         if (method_exists($this->getModel(), $scope)) {
             return $this->getModel()->{$scope}($this, ...$arguments);
         } else {
             if (static::hasMacro($name)) {
                 return $this->macroCall($name, $arguments);
-            } else {
-                throw new InvalidArgumentException(sprintf('Method %s does not exist in PowerJoinClause class', $name));
             }
+
+            $eloquentBuilder = $this->getModel()->newEloquentBuilder($this);
+            if (method_exists($eloquentBuilder, $name)) {
+                $eloquentBuilder->setModel($this->getModel());
+                return $eloquentBuilder->{$name}(...$arguments);
+            }
+
+            throw new InvalidArgumentException(sprintf('Method %s does not exist in PowerJoinClause class', $name));
         }
     }
 }
