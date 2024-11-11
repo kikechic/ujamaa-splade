@@ -12,6 +12,11 @@ var require_ssr = __commonJS({
   "ssr.js"(exports, module) {
     var vue = { exports: {} };
     var vue_cjs_prod = {};
+    /**
+    * vue v3.5.12
+    * (c) 2018-present Yuxi (Evan) You and Vue contributors
+    * @license MIT
+    **/
     var hasRequiredVue_cjs_prod;
     function requireVue_cjs_prod() {
       if (hasRequiredVue_cjs_prod)
@@ -42,7 +47,7 @@ var require_ssr = __commonJS({
               return shared.NOOP;
             }
           }
-          const key = template;
+          const key = shared.genCacheKey(template, options);
           const cached = compileCache[key];
           if (cached) {
             return cached;
@@ -77,6 +82,11 @@ var require_ssr = __commonJS({
       return vue_cjs_prod;
     }
     var vue_cjs = {};
+    /**
+    * vue v3.5.12
+    * (c) 2018-present Yuxi (Evan) You and Vue contributors
+    * @license MIT
+    **/
     var hasRequiredVue_cjs;
     function requireVue_cjs() {
       if (hasRequiredVue_cjs)
@@ -108,7 +118,7 @@ var require_ssr = __commonJS({
               return shared.NOOP;
             }
           }
-          const key = template;
+          const key = shared.genCacheKey(template, options);
           const cached = compileCache[key];
           if (cached) {
             return cached;
@@ -720,28 +730,28 @@ ${codeFrame}` : message);
       },
       emits: ["close"],
       setup(e, { emit: t }) {
-        const r = e, n = vueExports.ref(null);
-        function i() {
-          const o = document.createElement("html");
-          o.innerHTML = r.html, o.querySelectorAll("a").forEach((u) => u.setAttribute("target", "_top")), document.body.style.overflow = "hidden";
-          const l = n.value;
-          if (!l.contentWindow)
+        const r = e, n = t, i = vueExports.ref(null);
+        function s() {
+          const l = document.createElement("html");
+          l.innerHTML = r.html, l.querySelectorAll("a").forEach((c) => c.setAttribute("target", "_top")), document.body.style.overflow = "hidden";
+          const u = i.value;
+          if (!u.contentWindow)
             throw new Error("iframe not yet ready.");
-          l.contentWindow.document.open(), l.contentWindow.document.write(o.outerHTML), l.contentWindow.document.close(), document.addEventListener("keydown", s);
+          u.contentWindow.document.open(), u.contentWindow.document.write(l.outerHTML), u.contentWindow.document.close(), document.addEventListener("keydown", a);
         }
-        function s(o) {
-          o.keyCode === 27 && a();
+        function a(l) {
+          l.keyCode === 27 && o();
         }
-        function a() {
-          document.body.style.overflow = "visible", document.removeEventListener("keydown", s), t("close");
+        function o() {
+          document.body.style.overflow = "visible", document.removeEventListener("keydown", a), n("close");
         }
-        return vueExports.onMounted(() => i()), (o, l) => (vueExports.openBlock(), vueExports.createElementBlock("div", {
+        return vueExports.onMounted(() => s()), (l, u) => (vueExports.openBlock(), vueExports.createElementBlock("div", {
           style: { position: "fixed", top: "0px", right: "0px", bottom: "0px", left: "0px", "z-index": "200000", "box-sizing": "border-box", height: "100vh", width: "100vw", "background-color": "rgb(0 0 0 / 0.75)", padding: "2rem" },
-          onClick: a
+          onClick: o
         }, [
           vueExports.createElementVNode("iframe", {
             ref_key: "iframeElement",
-            ref: n,
+            ref: i,
             class: "bg-white w-full h-full"
           }, null, 512)
         ]));
@@ -4237,7 +4247,7 @@ ${codeFrame}` : message);
          * This determines the order of all files, existing and new, and sets it on the form.
          */
         setOrder() {
-          if (!this.multiple || !this.handlesExistingFiles || !this.filepondInstance)
+          if (!this.multiple || !this.filepondInstance)
             return;
           const t = this.filepondInstance.getFiles().filter((n) => !n.getMetadata("identifier")), r = this.filepondInstance.getFiles().map((n) => {
             const i = n.getMetadata("identifier");
@@ -4982,7 +4992,7 @@ ${codeFrame}` : message);
         passthrough: r.passthrough
       }, null, 8, ["html", "passthrough"])) : r.show ? vueExports.renderSlot(e.$slots, "default", { key: 1 }) : vueExports.createCommentVNode("", true);
     }
-    const Qf = /* @__PURE__ */ _e(Kf, [["render", Jf]]), Yf = ["href", "onClick"], Zf = {
+    const Qf = /* @__PURE__ */ _e(Kf, [["render", Jf]]), Yf = ["href"], Zf = {
       __name: "Link",
       props: {
         href: {
@@ -5072,48 +5082,48 @@ ${codeFrame}` : message);
         }
       },
       setup(e) {
-        const t = e, r = vueExports.inject("stack"), n = vueExports.ref(null);
+        const t = vueExports.inject("stack"), r = vueExports.ref(null), n = e;
         function i() {
-          if (n.value = null, !t.confirm)
+          if (r.value = null, !n.confirm)
             return s();
           p.confirm(
-            gs(t.confirm) ? "" : t.confirm,
-            t.confirmText,
-            t.confirmButton,
-            t.cancelButton,
-            !!t.requirePassword,
-            t.requirePasswordOnce,
-            !!t.confirmDanger
+            gs(n.confirm) ? "" : n.confirm,
+            n.confirmText,
+            n.confirmButton,
+            n.cancelButton,
+            !!n.requirePassword,
+            n.requirePasswordOnce,
+            !!n.confirmDanger
           ).then((a) => {
-            if (!t.requirePassword) {
+            if (!n.requirePassword) {
               s();
               return;
             }
-            a && (n.value = a), s();
+            a && (r.value = a), s();
           }).catch(() => {
           });
         }
         function s() {
-          if (t.away)
-            return window.location = t.href;
-          const o = r > 0 && t.keepModal;
-          if (t.modal && !o)
-            return p.modal(t.href);
-          if (t.slideover && !o)
-            return p.slideover(t.href);
-          if (et(t.href, "#")) {
-            if (p.openPreloadedModal(t.href.substring(1)))
+          if (n.away)
+            return window.location = n.href;
+          const o = t > 0 && n.keepModal;
+          if (n.modal && !o)
+            return p.modal(n.href);
+          if (n.slideover && !o)
+            return p.slideover(n.href);
+          if (et(n.href, "#")) {
+            if (p.openPreloadedModal(n.href.substring(1)))
               return;
-            console.log("No preloaded modal found for " + t.href);
+            console.log("No preloaded modal found for " + n.href);
           }
-          let l = t.method.trim().toUpperCase();
+          let l = n.method.trim().toUpperCase();
           const u = {
-            ...t.headers
+            ...n.headers
           };
-          if (o && (u["X-Splade-Modal"] = p.stackType(r), u["X-Splade-Modal-Target"] = r), t.preserveScroll && (u["X-Splade-Preserve-Scroll"] = true), l === "GET")
-            return t.replace ? p.replace(t.href, u) : p.visit(t.href, u);
-          const c = t.data instanceof FormData ? t.data : pn(t.data);
-          l !== "POST" && (c.append("_method", l), l = "POST"), n.value && (c.append(se(t.requirePassword) && t.requirePassword ? t.requirePassword : "password", n.value), n.value = null), p.request(t.href, l, c, u, t.replace);
+          if (o && (u["X-Splade-Modal"] = p.stackType(t), u["X-Splade-Modal-Target"] = t), n.preserveScroll && (u["X-Splade-Preserve-Scroll"] = true), l === "GET")
+            return n.replace ? p.replace(n.href, u) : p.visit(n.href, u);
+          const c = n.data instanceof FormData ? n.data : pn(n.data);
+          l !== "POST" && (c.append("_method", l), l = "POST"), r.value && (c.append(se(n.requirePassword) && n.requirePassword ? n.requirePassword : "password", r.value), r.value = null), p.request(n.href, l, c, u, n.replace);
         }
         return (a, o) => (vueExports.openBlock(), vueExports.createElementBlock("a", {
           href: e.href,
