@@ -21,6 +21,21 @@
 						</x-slot>
 						<x-splade-input name="email" />
 					</x-form-line-item>
+
+					<x-form-line-item>
+						<x-slot name="label">
+							{{ __('Password') }}
+						</x-slot>
+						<x-splade-input name="password" />
+					</x-form-line-item>
+
+					<x-form-line-item>
+						<x-slot name="label">
+							{{ __('Confirm Password') }}
+						</x-slot>
+						<x-splade-input name="password_confirmation" />
+					</x-form-line-item>
+
 					<x-splade-rehydrate on="signature-destroyed">
 						<x-form-line-item>
 							<x-slot name="label">

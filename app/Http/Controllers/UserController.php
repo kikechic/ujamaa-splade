@@ -82,6 +82,7 @@ class UserController extends Controller
             'email' => "required|unique:users,email,{$user->id},id",
             'roles' => 'required',
             'status' => 'required',
+            'password' => 'nullable|confirmed',
         ]);
 
         return DB::transaction(function () use ($validated, $user) {
@@ -89,7 +90,11 @@ class UserController extends Controller
             $user->name = $validated['name'];
             $user->email = $validated['email'];
             $user->status = $validated['status'];
-            // $user->password = Hash::make($validated['password']);
+
+            if($password = data_get($validated, 'password')) {
+                $user->password = Hash::make($password);
+            }
+
             $user->save();
 
             $user->roles()->sync($validated['roles']);
